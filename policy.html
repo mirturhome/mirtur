@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mirtur — політика та умови</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F3F6F5; --surface: #FFFFFF; --ink: #0E1F24; --muted: #56686D; --line: #DCE4E2;
+  --accent: #00935A; --accent-soft: #E2F2EA;
+  --f-display: "Unbounded", "Manrope", system-ui, sans-serif;
+  --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0B1416; --surface: #122023; --ink: #E6EFED; --muted: #92A4A6; --line: #223539; --accent: #2FCF8A; --accent-soft: #11332A; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #0B1416; --surface: #122023; --ink: #E6EFED; --muted: #92A4A6; --line: #223539; --accent: #2FCF8A; --accent-soft: #11332A; color-scheme: dark; }
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 760px; margin: 0 auto; padding-block: 40px 72px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--accent); }
+.back { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700; font-size: 14px; color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; background: var(--surface); }
+.back:hover { border-color: var(--ink); }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.7rem, 4.4vw, 2.4rem); line-height: 1.15; margin: 12px 0 8px; text-wrap: balance; }
+h2 { font-family: var(--f-display); font-weight: 500; font-size: 1.15rem; margin: 0 0 10px; display: flex; gap: 12px; align-items: baseline; }
+h2 span { font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
+.muted { color: var(--muted); font-size: 14px; }
+.summary { margin: 28px 0 8px; padding: 20px; border-radius: 16px; background: var(--accent-soft); display: grid; gap: 8px; }
+.summary b { font-family: var(--f-display); font-weight: 500; font-size: 15px; }
+.summary ul { margin: 0; padding-left: 20px; }
+section { padding-block: 24px; border-bottom: 1px solid var(--line); }
+section:last-of-type { border-bottom: none; }
+p { margin: 0 0 10px; }
+ul { margin: 0 0 10px; padding-left: 22px; }
+li { margin-bottom: 4px; }
+.data { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 12px 0; padding: 0; list-style: none; }
+.data li { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin: 0; font-size: 14px; }
+@media (max-width: 520px) { .data { grid-template-columns: 1fr; } }
+.contacts { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: grid; gap: 6px; }
+.contacts b { user-select: all; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="./" onclick="if (history.length > 1) { history.back(); return false; }">← Повернутися на сайт</a>
+
+  <p class="eyebrow" style="margin-top:32px">Mirtur</p>
+  <h1>Політика конфіденційності та умови надання послуг</h1>
+  <p class="muted">Редакція від 16 жовтня 2026 року</p>
+
+  <div class="summary">
+    <b>Коротко</b>
+    <ul>
+      <li>Ми відповідаємо за ваше майно та матеріали під час робіт.</li>
+      <li>Швидкість інтернету після підключення залежить від вашого провайдера, а не від нас.</li>
+      <li>Після здачі робіт ми не відповідаємо за вашу техніку.</li>
+      <li>Ваші адреса, номери телефонів, паролі та IP-адреси залишаються конфіденційними.</li>
+    </ul>
+  </div>
+
+  <section>
+    <h2><span>01</span>Хто ми і що робимо</h2>
+    <p>Mirtur надає послуги з монтажу та налаштування: прокладання домашнього інтернету по витій парі та за технологією GPON, встановлення mesh-мереж Wi-Fi, IP-телефонії та систем відеоспостереження. Ми працюємо в м. Київ, м. Чернігів, м. Черкаси та їхніх областях.</p>
+    <p>Mirtur <b>не є інтернет-провайдером</b>. Доступ до інтернету вам надає провайдер, з яким ви уклали окремий договір.</p>
+  </section>
+
+  <section>
+    <h2><span>02</span>Наша відповідальність під час робіт</h2>
+    <p>Під час монтажу ми несемо відповідальність за матеріальні речі:</p>
+    <ul>
+      <li>за збереження вашого майна, меблів, оздоблення та техніки в зоні робіт;</li>
+      <li>за матеріали та обладнання, які ми привезли й використовуємо, до моменту здачі робіт;</li>
+      <li>за якість прокладки кабелю, його кріплення та обтиску роз'ємів.</li>
+    </ul>
+    <p>Якщо майно пошкоджено з нашої вини під час робіт, ми усуваємо наслідки або компенсуємо збиток за домовленістю з вами.</p>
+  </section>
+
+  <section>
+    <h2><span>03</span>За що ми не відповідаємо</h2>
+    <p>Після здачі робіт ми фіксуємо швидкість і працездатність лінії разом із вами. Далі ми не несемо відповідальності:</p>
+    <ul>
+      <li>за швидкість, стабільність і доступність інтернету, оскільки вони залежать від провайдера, тарифу та його мережі;</li>
+      <li>за роботу, пошкодження чи поломку вашої техніки (роутерів, комп'ютерів, телевізорів, камер, телефонів) після підключення;</li>
+      <li>за збої через перепади напруги, відключення електроенергії, механічні пошкодження кабелю, зміну налаштувань вами чи третіми особами.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span>04</span>Які дані ми отримуємо</h2>
+    <p>Щоб виконати замовлення, нам можуть знадобитися:</p>
+    <ul class="data">
+      <li>ім'я та прізвище</li>
+      <li>номери телефонів</li>
+      <li>адреса підключення</li>
+      <li>електронна пошта</li>
+      <li>паролі Wi-Fi та роутерів</li>
+      <li>IP-адреси та мережеві налаштування</li>
+      <li>дані облікового запису провайдера</li>
+      <li>доступи до камер і реєстраторів</li>
+    </ul>
+    <p>Ці дані ми використовуємо лише для зв'язку з вами, виконання робіт і подальшої підтримки за вашим запитом.</p>
+  </section>
+
+  <section>
+    <h2><span>05</span>Конфіденційність</h2>
+    <ul>
+      <li>Ми зберігаємо всі ваші дані конфіденційно та не передаємо їх третім особам, крім випадків, прямо передбачених законодавством України.</li>
+      <li>Паролі та доступи ми використовуємо тільки під час налаштування. Після завершення робіт радимо змінити паролі, і ми покажемо, як це зробити.</li>
+      <li>На сайті у відгуках показуємо лише ваше ім'я та частину адреси пошти.</li>
+      <li>Ви можете попросити показати, виправити або видалити ваші дані, написавши нам на пошту.</li>
+    </ul>
+    <p class="muted">Обробка персональних даних здійснюється відповідно до Закону України «Про захист персональних даних».</p>
+  </section>
+
+  <section>
+    <h2><span>06</span>Згода</h2>
+    <p>Надсилаючи заявку, запит на дзвінок або відгук на сайті, ви погоджуєтеся з цими умовами та даєте згоду на обробку ваших персональних даних для перелічених цілей.</p>
+  </section>
+
+  <section>
+    <h2><span>07</span>Контакти</h2>
+    <div class="contacts">
+      <span>Mirtur</span>
+      <span>Телефон: <b>+380 93 068 42 31</b></span>
+      <span>Telegram: <b>@mirtur_home_mesh</b></span>
+      <span>Пошта: <b>mirturua@gmail.com</b></span>
+    </div>
+  </section>
+</div>
+<script>
+try { const t = localStorage.getItem('mirtur-theme'); if (t) document.documentElement.dataset.theme = t; } catch {}
+</script>
+</body>
+</html>

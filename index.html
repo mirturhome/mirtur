@@ -1,0 +1,1388 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mirtur — домашній інтернет</title>
+<meta name="description" content="Mirtur: прокладання домашнього інтернету по витій парі та GPON, mesh Wi-Fi, IP-телефонія та відеоспостереження. Київ, Чернігів, Черкаси та області.">
+<meta property="og:title" content="Mirtur — монтаж домашнього інтернету">
+<meta property="og:description" content="Швидко, недорого, якісно. Стандартна прокладка від 1 000 ₴.">
+<meta name="theme-color" content="#00935A">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12.5' fill='white' stroke='%230E1F24' stroke-width='1.5'/%3E%3Cpath d='M5 17c4-8 14-8 18 0' fill='none' stroke='%2300935A' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='14' cy='17' r='2.6' fill='%231D57F0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* базові стилі (раніше їх додавав Claude) */
+html { -webkit-text-size-adjust: 100%; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); color-scheme: light; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+.hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; opacity: 0; }
+
+/* Layout: one calm column of bands, cool off-white ground; the single bold move is the fiber line in the hero. Accent = APC-connector green, secondary = UPC-connector blue. */
+:root {
+  --bg: #F3F6F5;
+  --surface: #FFFFFF;
+  --ink: #0E1F24;
+  --muted: #56686D;
+  --line: #DCE4E2;
+  --accent: #00935A;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E2F2EA;
+  --blue: #1D57F0;
+  --blue-soft: #E5ECFE;
+  --star: #D99A00;
+  --danger: #C2412D;
+  --shadow: 0 1px 2px rgba(14,31,36,.05), 0 8px 24px rgba(14,31,36,.06);
+  --f-display: "Unbounded", "Manrope", system-ui, sans-serif;
+  --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 14px;
+  --wrap: 1120px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1416; --surface: #122023; --ink: #E6EFED; --muted: #92A4A6; --line: #223539;
+    --accent: #2FCF8A; --accent-ink: #04170E; --accent-soft: #11332A; --blue: #7397FF; --blue-soft: #1A2647;
+    --star: #F2C14E; --danger: #FF7B66; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1416; --surface: #122023; --ink: #E6EFED; --muted: #92A4A6; --line: #223539;
+  --accent: #2FCF8A; --accent-ink: #04170E; --accent-soft: #11332A; --blue: #7397FF; --blue-soft: #1A2647;
+  --star: #F2C14E; --danger: #FF7B66; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--bg); }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: 1.12; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.3rem); }
+h3 { font-size: 1.05rem; font-weight: 500; }
+p { margin: 0; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 6px; }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+.wrap {
+  max-width: var(--wrap); margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+section { padding-block: clamp(56px, 8vw, 104px); }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.lead { color: var(--muted); font-size: 1.08rem; max-width: 60ch; }
+.section-head { display: grid; gap: 14px; margin-bottom: 40px; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid transparent;
+  font-weight: 700; font-size: 15px; cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: transform .15s ease, background .2s, border-color .2s, color .2s;
+}
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { filter: brightness(1.06); }
+.btn-ghost { background: transparent; border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-sm { height: 38px; padding: 0 16px; font-size: 14px; }
+
+/* ---------- header ---------- */
+.header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid transparent; transition: border-color .2s;
+}
+.header.scrolled { border-bottom-color: var(--line); }
+.header .wrap { display: flex; align-items: center; gap: 24px; height: 68px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--f-display); font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
+.logo-mark { width: 28px; height: 28px; flex: none; }
+.nav { display: flex; gap: 4px; margin-left: auto; }
+.nav a { text-decoration: none; padding: 8px 12px; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--muted); transition: color .2s, background .2s; }
+.nav a:hover, .nav a.active { color: var(--ink); background: var(--surface); }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
+  display: inline-grid; place-items: center; cursor: pointer; transition: border-color .2s;
+}
+.icon-btn:hover { border-color: var(--ink); }
+.icon-btn svg { width: 18px; height: 18px; }
+.burger { display: none; }
+.mobile-nav { display: none; }
+@media (max-width: 920px) {
+  .nav { display: none; }
+  .burger { display: inline-grid; }
+  .header-actions { margin-left: auto; }
+  .header-actions .btn { display: none; }
+  .mobile-nav.open {
+    display: grid; gap: 4px; padding-block: 8px 16px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    border-top: 1px solid var(--line); background: var(--bg);
+  }
+  .mobile-nav a { text-decoration: none; padding: 12px 4px; font-weight: 600; border-bottom: 1px solid var(--line); }
+  .mobile-nav .btn { margin-top: 12px; }
+}
+
+/* ---------- hero ---------- */
+.hero { padding-block: clamp(40px, 7vw, 88px) clamp(48px, 7vw, 88px); }
+.hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
+.hero-grid > * { min-width: 0; }
+.hero h1 { font-size: clamp(2.1rem, 5.4vw, 4rem); }
+.hero h1 .hl { color: var(--accent); }
+.hero .lead { margin-top: 20px; }
+.check-form { margin-top: 32px; display: flex; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px; max-width: 520px; box-shadow: var(--shadow); }
+.check-form input { flex: 1; min-width: 0; border: none; background: transparent; padding: 0 14px; outline: none; font-size: 15px; }
+.check-form input::placeholder { color: var(--muted); }
+.hero-note { margin-top: 12px; font-size: 13px; color: var(--muted); }
+.trio { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+.trio > div { padding: 18px 16px 0 0; display: grid; gap: 2px; }
+.trio > div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+.trio b { font-family: var(--f-display); font-weight: 500; font-size: clamp(1.15rem, 2.4vw, 1.5rem); }
+.trio span { color: var(--muted); font-size: 13px; }
+
+.fiber-card { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 24px; box-shadow: var(--shadow); }
+.fiber-card svg { width: 100%; height: auto; display: block; }
+.fiber-path { stroke: var(--line); }
+.fiber-pulse { stroke: var(--accent); stroke-dasharray: 60 560; animation: pulse 2.6s linear infinite; }
+.fiber-pulse.p2 { stroke: var(--blue); animation-delay: -1.3s; }
+@keyframes pulse { from { stroke-dashoffset: 620; } to { stroke-dashoffset: 0; } }
+.fiber-node { fill: var(--surface); stroke: var(--ink); }
+.fiber-label { fill: var(--muted); font-family: var(--f-mono); font-size: 11px; }
+.fiber-house { fill: none; stroke: var(--ink); }
+.fiber-window { fill: var(--accent); opacity: .85; animation: blink 2.6s ease-in-out infinite; }
+@keyframes blink { 0%,60%,100% { opacity: .35; } 70%,90% { opacity: 1; } }
+.meter { margin-top: 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.meter > div { background: var(--bg); border-radius: 12px; padding: 12px; display: grid; gap: 2px; }
+.meter small { color: var(--muted); font-size: 11px; font-family: var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
+.meter b { font-family: var(--f-mono); font-weight: 500; font-size: 18px; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .check-form { flex-direction: column; border-radius: 18px; }
+  .check-form input { height: 44px; }
+  .trio { grid-template-columns: 1fr; }
+  .trio > div + div { padding-left: 0; border-left: none; border-top: 1px solid var(--line); padding-top: 14px; margin-top: 14px; }
+  .trio > div { padding-top: 14px; }
+}
+
+/* ---------- promises ---------- */
+.band { background: var(--surface); border-block: 1px solid var(--line); }
+.promise { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 4vw, 48px); }
+.promise > div { display: grid; gap: 10px; align-content: start; }
+.promise .ico { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.promise .ico svg { width: 22px; height: 22px; }
+.promise p { color: var(--muted); }
+@media (max-width: 760px) { .promise { grid-template-columns: 1fr; } }
+
+/* ---------- tariffs ---------- */
+.billing { display: inline-flex; padding: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; gap: 4px; }
+.billing button { border: none; background: transparent; padding: 8px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; cursor: pointer; color: var(--muted); }
+.billing button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.billing .save { font-family: var(--f-mono); font-size: 11px; color: var(--accent); margin-left: 4px; }
+.billing button[aria-pressed="true"] .save { color: var(--accent-soft); }
+.tariffs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.tariff {
+  position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  padding: 24px; display: grid; gap: 18px; grid-template-rows: auto auto 1fr auto; transition: border-color .2s, transform .2s;
+}
+.tariff:hover { border-color: var(--ink); transform: translateY(-2px); }
+.tariff.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.tariff .tag { position: absolute; top: -11px; left: 24px; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: .04em; }
+.tariff-name { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.tariff-name h3 { font-size: 1.1rem; }
+.speed { font-family: var(--f-display); font-size: 2.4rem; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
+.speed small { font-family: var(--f-mono); font-size: 13px; color: var(--muted); margin-left: 4px; font-weight: 400; }
+.price { display: flex; align-items: baseline; gap: 6px; }
+.price b { font-family: var(--f-mono); font-size: 1.6rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.price span { color: var(--muted); font-size: 14px; }
+.price s { color: var(--muted); font-family: var(--f-mono); font-size: 14px; }
+.feats { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 14px; align-content: start; }
+.feats li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; }
+.feats li::before { content: ""; width: 14px; height: 14px; margin-top: 4px; border-radius: 50%; background: var(--accent-soft); box-shadow: inset 0 0 0 4px var(--accent-soft), inset 0 0 0 7px var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-family: var(--f-mono); font-size: 11px; padding: 3px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); }
+.tariff-foot { font-size: 13px; color: var(--muted); margin-top: 20px; }
+@media (max-width: 1000px) { .tariffs { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .tariffs { grid-template-columns: 1fr; } }
+.tariff-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 32px; }
+
+/* ---------- speed calculator ---------- */
+.calc { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; }
+.calc > * { min-width: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: clamp(20px, 3vw, 28px); }
+.need-list { display: grid; gap: 4px; }
+.need { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.need:last-child { border-bottom: none; }
+.need b { font-weight: 600; font-size: 15px; display: block; }
+.need small { color: var(--muted); font-size: 12px; font-family: var(--f-mono); }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; }
+.stepper button { width: 34px; height: 34px; border: none; background: transparent; border-radius: 999px; cursor: pointer; font-size: 18px; line-height: 1; }
+.stepper button:hover { background: var(--bg); }
+.stepper output { min-width: 26px; text-align: center; font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.result { display: grid; gap: 18px; align-content: start; }
+.result .big { font-family: var(--f-display); font-size: clamp(2.2rem, 4.5vw, 3rem); font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
+.result .big small { font-family: var(--f-mono); font-size: 14px; color: var(--muted); font-weight: 400; margin-left: 6px; }
+.scale { position: relative; height: 10px; border-radius: 999px; background: var(--bg); overflow: hidden; }
+.scale i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--accent), var(--blue)); border-radius: 999px; transition: width .4s ease; }
+.scale-labels { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 11px; color: var(--muted); }
+.rec { border: 1px dashed var(--accent); border-radius: 14px; padding: 16px; display: grid; gap: 10px; background: var(--accent-soft); }
+.rec p { font-size: 14px; }
+.dl { display: grid; gap: 8px; }
+.dl-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.dl select { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 6px 10px; font-size: 14px; }
+.dl-row { display: grid; grid-template-columns: 90px 1fr auto; gap: 10px; align-items: center; font-size: 13px; }
+.dl-row .bar { height: 6px; border-radius: 999px; background: var(--bg); overflow: hidden; }
+.dl-row .bar i { display: block; height: 100%; background: var(--ink); opacity: .75; border-radius: 999px; transition: width .4s; }
+.dl-row.on .bar i { background: var(--accent); opacity: 1; }
+.dl-row.on { font-weight: 700; }
+@media (max-width: 860px) { .calc { grid-template-columns: 1fr; } }
+
+/* ---------- technologies ---------- */
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.tab { border: 1px solid var(--line); background: var(--surface); padding: 10px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; cursor: pointer; transition: .2s; }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.tech { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.tech > * { min-width: 0; }
+.tech-body { display: grid; gap: 16px; }
+.tech-body h3 { font-size: 1.4rem; }
+.tech-body p { color: var(--muted); }
+.spec { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.spec > div { background: var(--surface); padding: 14px; display: grid; gap: 2px; }
+.spec small { font-family: var(--f-mono); font-size: 11px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.spec b { font-family: var(--f-mono); font-weight: 500; font-size: 15px; font-variant-numeric: tabular-nums; }
+.diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 20px; }
+.diagram svg { width: 100%; height: auto; display: block; }
+.dg-line { stroke: var(--line); stroke-width: 3; fill: none; }
+.dg-fiber { stroke: var(--accent); stroke-width: 3; fill: none; }
+.dg-copper { stroke: var(--blue); stroke-width: 3; fill: none; stroke-dasharray: 2 6; stroke-linecap: round; }
+.dg-air { stroke: var(--blue); stroke-width: 2; fill: none; stroke-dasharray: 6 6; }
+.dg-box { fill: var(--bg); stroke: var(--ink); stroke-width: 1.5; }
+.dg-text { fill: var(--ink); font-family: var(--f-mono); font-size: 11px; }
+.dg-sub { fill: var(--muted); font-family: var(--f-mono); font-size: 10px; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; font-size: 12px; color: var(--muted); font-family: var(--f-mono); }
+.legend i { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; border-radius: 2px; }
+.pros { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; font-size: 14px; }
+.pros li { padding-left: 18px; position: relative; }
+.pros li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 2px; background: var(--accent); }
+.table-wrap { overflow-x: auto; margin-top: 40px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--f-mono); font-weight: 500; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: none; }
+td.mono { white-space: nowrap; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+@media (max-width: 860px) { .tech { grid-template-columns: 1fr; } }
+
+/* ---------- steps ---------- */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; counter-reset: s; }
+.step { position: relative; padding: 0 20px 0 0; display: grid; gap: 10px; align-content: start; }
+.step .n { font-family: var(--f-mono); font-size: 13px; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+.step .n::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.step:last-child .n::after { display: none; }
+.step p { color: var(--muted); font-size: 14px; }
+.step .time { font-family: var(--f-mono); font-size: 12px; color: var(--ink); background: var(--bg); padding: 2px 8px; border-radius: 6px; justify-self: start; }
+@media (max-width: 860px) { .steps { grid-template-columns: 1fr 1fr; row-gap: 32px; } }
+@media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+/* ---------- reviews ---------- */
+.reviews-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 28px; }
+.score { display: flex; align-items: center; gap: 14px; }
+.score b { font-family: var(--f-display); font-size: 2.6rem; font-weight: 500; line-height: 1; }
+.score small { color: var(--muted); font-size: 13px; display: block; }
+.stars { color: var(--star); letter-spacing: 2px; font-size: 16px; }
+.stars .off { color: var(--line); }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.filters button { border: 1px solid var(--line); background: var(--surface); padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.filters button[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+.reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.review { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: grid; gap: 12px; align-content: start; animation: rise .35s ease both; }
+@keyframes rise { from { transform: translateY(6px); } to { transform: none; } }
+.review-head { display: flex; align-items: center; gap: 12px; }
+.avatar { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 15px; background: var(--blue-soft); color: var(--blue); flex: none; }
+.review-head div { min-width: 0; }
+.review-head b { display: block; font-size: 15px; overflow-wrap: anywhere; }
+.review-head small { color: var(--muted); font-size: 12px; font-family: var(--f-mono); }
+.review p { font-size: 15px; overflow-wrap: anywhere; white-space: pre-line; }
+.review .meta { display: flex; gap: 6px; flex-wrap: wrap; }
+.review.example { border-style: dashed; }
+.example-badge { font-family: var(--f-mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; margin-left: auto; align-self: start; }
+.reviews-empty { grid-column: 1 / -1; color: var(--muted); font-size: 14px; }
+.more { margin-top: 20px; display: flex; justify-content: center; }
+@media (max-width: 960px) { .reviews { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .reviews { grid-template-columns: 1fr; } }
+
+/* ---------- forms ---------- */
+.field { display: grid; gap: 6px; }
+.field label, .field .label { font-size: 13px; font-weight: 600; }
+.field input, .field select, .field textarea {
+  width: 100%; border: 1px solid var(--line); background: var(--bg); border-radius: 12px; padding: 12px 14px; font-size: 15px; outline: none; transition: border-color .2s, background .2s;
+}
+.field textarea { min-height: 110px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); background: var(--surface); }
+.field .err { color: var(--danger); font-size: 12px; min-height: 0; }
+.field.invalid input, .field.invalid textarea, .field.invalid select { border-color: var(--danger); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-grid .full { grid-column: 1 / -1; }
+@media (max-width: 560px) { .form-grid { grid-template-columns: 1fr; } }
+.rate { display: inline-flex; flex-direction: row-reverse; justify-content: flex-end; gap: 2px; }
+.rate input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.rate label { font-size: 28px; line-height: 1; cursor: pointer; color: var(--line); transition: color .15s, transform .15s; padding: 2px; }
+.rate label:hover, .rate label:hover ~ label, .rate input:checked ~ label { color: var(--star); }
+.rate input:focus-visible + label { outline: 2px solid var(--blue); border-radius: 6px; }
+.consent { display: flex; gap: 10px; align-items: start; font-size: 13px; color: var(--muted); }
+.consent input { margin-top: 3px; accent-color: var(--accent); }
+.form-msg { font-size: 14px; padding: 12px 14px; border-radius: 12px; }
+.form-msg.ok { background: var(--accent-soft); color: var(--ink); }
+.form-msg.bad { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--ink); }
+
+/* ---------- FAQ ---------- */
+.faq { display: grid; gap: 0; border-top: 1px solid var(--line); max-width: 860px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 20px 40px 20px 0; position: relative; font-weight: 700; font-size: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; position: absolute; right: 6px; top: 50%; width: 12px; height: 12px; margin-top: -8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform .2s; }
+.faq details[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
+.faq details p { padding: 0 0 20px; color: var(--muted); max-width: 70ch; }
+
+/* ---------- contacts ---------- */
+.contacts { display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; align-items: start; }
+.contacts > * { min-width: 0; }
+.contact-list { display: grid; gap: 0; }
+.contact-row { display: grid; grid-template-columns: 40px 1fr auto; gap: 14px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.contact-row:last-child { border-bottom: none; }
+.contact-row .ci { width: 40px; height: 40px; border-radius: 12px; background: var(--bg); display: grid; place-items: center; color: var(--accent); }
+.contact-row .ci svg { width: 18px; height: 18px; }
+.contact-row small { display: block; color: var(--muted); font-size: 12px; }
+.contact-row b { font-weight: 600; overflow-wrap: anywhere; user-select: all; }
+.copy { border: 1px solid var(--line); background: transparent; border-radius: 999px; font-size: 12px; font-weight: 600; padding: 6px 12px; cursor: pointer; }
+.copy:hover { border-color: var(--ink); }
+.demo-note { margin-top: 14px; font-size: 12px; color: var(--muted); font-family: var(--f-mono); border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; }
+.hours { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; font-size: 14px; margin-top: 8px; }
+.hours span:nth-child(even) { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.status-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+.status-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.status-pill.off { background: var(--bg); color: var(--muted); }
+@media (max-width: 860px) { .contacts { grid-template-columns: 1fr; } }
+
+/* ---------- footer ---------- */
+footer { border-top: 1px solid var(--line); padding-block: 32px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; color: var(--muted); font-size: 13px; }
+footer nav { display: flex; gap: 16px; flex-wrap: wrap; }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--ink); }
+
+/* ---------- modal ---------- */
+.modal { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.modal-bg { position: absolute; inset: 0; background: rgba(8,16,18,.5); backdrop-filter: blur(4px); animation: fade .2s ease; }
+.modal-card { position: relative; width: min(560px, 100%); max-height: 100%; overflow-y: auto; background: var(--surface); border-radius: 22px; padding: clamp(20px, 4vw, 32px); box-shadow: 0 30px 80px rgba(0,0,0,.3); animation: pop .25s ease; display: grid; gap: 18px; }
+.modal-close { position: absolute; top: 14px; right: 14px; }
+@keyframes fade { from { opacity: 0; } }
+@keyframes pop { from { transform: translateY(12px) scale(.98); opacity: .6; } }
+.success { text-align: center; display: grid; gap: 12px; justify-items: center; padding: 12px 0; }
+.success .check { width: 64px; height: 64px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.success .check svg { width: 30px; height: 30px; }
+.ticket { font-family: var(--f-mono); background: var(--bg); border-radius: 8px; padding: 4px 10px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 140%); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: 14px; font-weight: 600; z-index: 120; transition: transform .3s ease; max-width: calc(100% - 32px); }
+.toast.show { transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .fiber-pulse { stroke-dasharray: none; opacity: .5; }
+}
+
+/* ---------- services ---------- */
+.services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.service {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 24px;
+  display: grid; gap: 14px; grid-template-rows: auto auto auto 1fr auto; transition: border-color .2s, transform .2s;
+}
+.service:hover { border-color: var(--ink); transform: translateY(-2px); }
+.service.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.service .s-ico { width: 48px; height: 48px; border-radius: 14px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.service .s-ico svg { width: 24px; height: 24px; }
+.service p { color: var(--muted); font-size: 14px; }
+.cost { display: grid; gap: 2px; }
+.cost .from { font-size: 12px; color: var(--muted); font-family: var(--f-mono); letter-spacing: .06em; text-transform: uppercase; }
+.cost b { font-family: var(--f-display); font-weight: 500; font-size: 1.7rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.cost .usd { font-family: var(--f-mono); font-size: 13px; color: var(--muted); }
+.price-note { margin-top: 24px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; padding: 18px 20px; border-radius: 16px; background: var(--accent-soft); }
+.price-note b { font-family: var(--f-mono); font-weight: 500; }
+.price-note .pn-ico { width: 40px; height: 40px; border-radius: 50%; background: var(--surface); color: var(--accent); display: grid; place-items: center; }
+.price-note .pn-ico svg { width: 20px; height: 20px; }
+.price-note p { font-size: 14px; }
+@media (max-width: 1000px) { .services { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .services { grid-template-columns: 1fr; } .price-note { grid-template-columns: 1fr; } }
+
+/* ---------- speeds ---------- */
+.speeds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.spd {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 24px;
+  display: grid; gap: 14px; grid-template-rows: auto auto 1fr auto; position: relative; overflow: hidden;
+}
+.spd .speed { font-size: 2.6rem; }
+.spd .bars { display: flex; gap: 4px; align-items: end; height: 22px; }
+.spd .bars i { width: 6px; border-radius: 2px; background: var(--line); }
+.spd .bars i.on { background: var(--accent); }
+.spd p { font-size: 15px; line-height: 1.5; }
+.spd .use { color: var(--muted); font-size: 13px; font-family: var(--f-mono); }
+.spd.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.spd .tag { position: absolute; top: 16px; right: 16px; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+@media (max-width: 900px) { .speeds { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .speeds { grid-template-columns: 1fr; } }
+
+/* ---------- region chips & contacts ---------- */
+.regions { display: flex; flex-wrap: wrap; gap: 8px; }
+.region { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; background: var(--bg); font-weight: 600; font-size: 14px; }
+.region::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+.mini-contacts { border-top: 1px solid var(--line); padding-block: 48px; }
+.mini-grid { display: grid; grid-template-columns: 1fr auto; gap: 24px 40px; align-items: center; }
+.mini-grid > * { min-width: 0; }
+.mini-grid h2 { font-size: 1.4rem; }
+.mini-list { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 12px; font-size: 15px; }
+.mini-list span { display: inline-flex; gap: 8px; align-items: baseline; }
+.mini-list small { color: var(--muted); font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.mini-list b { font-weight: 600; user-select: all; overflow-wrap: anywhere; }
+@media (max-width: 760px) { .mini-grid { grid-template-columns: 1fr; } }
+
+.consent a { color: var(--accent); }
+.policy-link { color: var(--accent); font-weight: 600; }
+.dg-coax { stroke: var(--ink); stroke-width: 4; fill: none; opacity: .55; }
+.dg-wave { stroke: var(--accent); stroke-width: 1.6; fill: none; opacity: .7; }
+.field .hint { color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<header class="header" id="header">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="Mirtur — на початок">
+      <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true">
+        <circle cx="14" cy="14" r="12.5" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+        <path d="M5 17c4-8 14-8 18 0" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="14" cy="17" r="2.6" fill="var(--blue)"/>
+      </svg>
+      Mirtur
+    </a>
+    <nav class="nav" aria-label="Розділи">
+      <a href="#services">Послуги</a>
+      <a href="#contacts">Контакти</a>
+      <a href="#speeds">Швидкість</a>
+      <a href="#tech">Технології</a>
+      <a href="#reviews">Відгуки</a>
+      <a href="#faq">Питання</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="themeBtn" aria-label="Змінити тему">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="btn btn-primary btn-sm" data-open="lead">Зареєструвати підключення</button>
+      <button class="icon-btn burger" id="burger" aria-label="Меню" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Меню">
+    <a href="#services">Послуги</a>
+    <a href="#contacts">Контакти</a>
+    <a href="#speeds">Швидкість</a>
+    <a href="#tech">Технології</a>
+    <a href="#reviews">Відгуки</a>
+    <a href="#faq">Питання</a>
+    <button class="btn btn-primary" data-open="lead">Зареєструвати підключення</button>
+  </nav>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Монтаж домашнього інтернету</span>
+        <h1 style="margin-top:14px">Проведемо інтернет у ваш дім. <span class="hl">Швидко, недорого, якісно.</span></h1>
+        <p class="lead">Прокладаємо кабель по витій парі або оптиці GPON, налаштовуємо роутери та mesh Wi-Fi, встановлюємо IP-телефонію і камери відеоспостереження.</p>
+        <form class="check-form" id="checkForm" novalidate>
+          <input id="checkAddress" type="text" placeholder="Ваша адреса: місто, вулиця, будинок" aria-label="Адреса підключення" autocomplete="street-address">
+          <button class="btn btn-primary" type="submit">Зареєструвати підключення за адресою</button>
+        </form>
+        <p class="hero-note">Вкажіть адресу, оберіть послугу, і ми зв'яжемося з вами, щоб погодити час і вартість.</p>
+        <div class="trio">
+          <div><b>за 1 день</b><span>від заявки до роботи</span></div>
+          <div><b style="font-family:var(--f-display)">від <span data-uah="1000"></span></b><span>стандартна прокладка, <span data-usd="1000"></span></span></div>
+          <div><b>3 області</b><span>Київ, Чернігів, Черкаси</span></div>
+        </div>
+      </div>
+
+      <div class="fiber-card" aria-label="Схема: оптичне волокно від вузла до будинку">
+        <svg viewBox="0 0 420 220" role="img">
+          <path class="fiber-path" d="M40 150 C 130 150, 140 60, 230 70 S 330 140, 350 120" fill="none" stroke-width="10" stroke-linecap="round"/>
+          <path class="fiber-pulse" d="M40 150 C 130 150, 140 60, 230 70 S 330 140, 350 120" fill="none" stroke-width="4" stroke-linecap="round"/>
+          <path class="fiber-pulse p2" d="M40 150 C 130 150, 140 60, 230 70 S 330 140, 350 120" fill="none" stroke-width="4" stroke-linecap="round"/>
+          <rect class="fiber-node" x="18" y="128" width="44" height="44" rx="10" stroke-width="1.5"/>
+          <circle cx="32" cy="142" r="3" fill="var(--accent)"/><circle cx="42" cy="142" r="3" fill="var(--blue)"/><circle cx="52" cy="142" r="3" fill="var(--muted)"/>
+          <path d="M28 158h24" stroke="var(--ink)" stroke-width="1.5"/>
+          <text class="fiber-label" x="16" y="196">щиток у під'їзді</text>
+          <circle cx="230" cy="70" r="7" class="fiber-node" stroke-width="1.5"/>
+          <text class="fiber-label" x="196" y="46">кабель-канал</text>
+          <g transform="translate(340 72)">
+            <path class="fiber-house" d="M0 40 L32 12 L64 40 V96 H0 Z" stroke-width="1.5" stroke-linejoin="round"/>
+            <rect class="fiber-window" x="14" y="52" width="14" height="14" rx="2"/>
+            <rect class="fiber-window" x="36" y="52" width="14" height="14" rx="2" style="animation-delay:.2s"/>
+            <rect x="24" y="74" width="16" height="22" rx="2" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+          </g>
+          <text class="fiber-label" x="330" y="196">роутер у вас</text>
+        </svg>
+        <div class="meter" aria-live="polite">
+          <div><small>Швидкість</small><b id="mSpeed">940</b></div>
+          <div><small>Пінг</small><b id="mPing">3 мс</b></div>
+          <div><small>Втрати</small><b>0 %</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMISES -->
+  <section class="band" aria-label="Чому Mirtur">
+    <div class="wrap promise">
+      <div>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+        <h3>Швидко</h3>
+        <p>Приїжджаємо в день заявки або в зручний для вас час. Стандартна прокладка займає 1–2 години разом із налаштуванням.</p>
+      </div>
+      <div>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.6-1-1.7-1.5-3-1.5-1.7 0-3 .9-3 2.2 0 3 6 1.6 6 4.6 0 1.3-1.3 2.2-3 2.2-1.4 0-2.6-.6-3.1-1.6M12 6v2m0 8v2"/></svg></span>
+        <h3>Недорого</h3>
+        <p>Стандартна прокладка коштує <span data-uah="1000"></span>. Остаточну ціну називаємо до початку робіт, і вона вже не змінюється.</p>
+      </div>
+      <div>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <h3>Якісно</h3>
+        <p>Кабель ховаємо в кабель-канал або плінтус, обжимаємо й тестуємо кожну лінію. Швидкість заміряємо при вас.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Послуги та ціни</span>
+        <h2>Що ми робимо</h2>
+        <p class="lead">Ціни вказані «від». Остаточна вартість залежить від довжини траси, складності прокладки та матеріалів. Ми називаємо її після огляду, ще до початку робіт.</p>
+      </div>
+      <div class="services" id="serviceList"></div>
+      <div class="price-note">
+        <span class="pn-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></span>
+        <p>Стандартна прокладка домашнього інтернету по витій парі або GPON коштує <b data-uah="1000"></b> (<span data-usd="1000"></span>). Ціна в доларах орієнтовна, за курсом НБУ <span id="rateLabel" class="mono"></span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS (big) -->
+  <section id="contacts" class="band">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Контакти</span>
+        <h2>Зв'яжіться з нами зручним способом</h2>
+      </div>
+      <div class="contacts">
+        <div class="panel">
+          <div class="contact-list">
+            <div class="contact-row">
+              <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></span>
+              <div><small>Телефон</small><b>+380 93 068 42 31</b></div>
+              <button class="copy" data-copy="+380930684231">Копіювати</button>
+            </div>
+            <div class="contact-row">
+              <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 3-9.5 18-2.5-8-8-2.5z"/></svg></span>
+              <div><small>Telegram</small><b>@mirtur_home_mesh</b></div>
+              <button class="copy" data-copy="@mirtur_home_mesh">Копіювати</button>
+            </div>
+            <div class="contact-row">
+              <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></span>
+              <div><small>Пошта</small><b>mirturua@gmail.com</b></div>
+              <button class="copy" data-copy="mirturua@gmail.com">Копіювати</button>
+            </div>
+            <div class="contact-row">
+              <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+              <div><small>Де працюємо</small><b>Київ, Чернігів, Черкаси та області</b></div>
+              <span></span>
+            </div>
+          </div>
+        </div>
+        <div class="panel" style="display:grid;gap:18px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <h3 style="font-size:1.2rem">Регіони виїзду</h3>
+            <span class="status-pill" id="openPill">Зараз приймаємо заявки</span>
+          </div>
+          <div class="regions">
+            <span class="region">м. Київ та область</span>
+            <span class="region">м. Чернігів та область</span>
+            <span class="region">м. Черкаси та область</span>
+          </div>
+          <hr style="border:none;border-top:1px solid var(--line);margin:0">
+          <h3 style="font-size:1.2rem">Передзвонимо вам</h3>
+          <form id="callForm" class="form-grid" novalidate>
+            <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="field"><label for="cbName">Ім'я</label><input id="cbName" autocomplete="name" placeholder="Як до вас звертатися"><span class="err"></span></div>
+            <div class="field"><label for="cbPhone">Телефон</label><input id="cbPhone" type="tel" autocomplete="tel" placeholder="+380 __ ___ __ __"><span class="err"></span></div>
+            <div class="full"><button class="btn btn-primary" type="submit" style="width:100%">Замовити дзвінок</button></div>
+            <div class="full form-msg" id="cbMsg" hidden></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEEDS -->
+  <section id="speeds">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Швидкість</span>
+        <h2>Оберіть швидкість</h2>
+        <p class="lead">Ми прокладаємо лінію і ставимо обладнання, яке витягне потрібну вам швидкість. Ось що вона дає на практиці.</p>
+      </div>
+      <div class="speeds" id="speedList"></div>
+    </div>
+  </section>
+
+  <!-- SPEED CALCULATOR -->
+  <section id="speed" class="band">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Підбір швидкості</span>
+        <h2>Скільки швидкості потрібно саме вам?</h2>
+        <p class="lead">Вкажіть, як вдома користуються інтернетом одночасно. Ми порахуємо потрібну швидкість із запасом.</p>
+      </div>
+      <div class="calc">
+        <div class="panel need-list" id="needs"></div>
+        <div class="panel result">
+          <div>
+            <span class="eyebrow">Потрібно у пікові години</span>
+            <div class="big" style="margin-top:8px"><span id="needMbps">0</span><small>Мбіт/с</small></div>
+          </div>
+          <div>
+            <div class="scale"><i id="needBar" style="width:0%"></i></div>
+            <div class="scale-labels" style="margin-top:6px"><span>0</span><span>1 Гбіт/с</span><span>2,5</span><span>5</span><span>8 Гбіт/с</span></div>
+          </div>
+          <div class="rec">
+            <p id="recText"></p>
+            <button class="btn btn-primary btn-sm" data-open="lead" data-service="internet" style="justify-self:start">Зареєструвати підключення</button>
+          </div>
+          <div class="dl">
+            <div class="dl-head">
+              <b style="font-size:14px">Час завантаження</b>
+              <select id="fileSel" aria-label="Що завантажуємо">
+                <option value="80">Гра · 80 ГБ</option>
+                <option value="4" selected>Фільм 4K · 4 ГБ</option>
+                <option value="1.5">Сезон серіалу · 1,5 ГБ</option>
+                <option value="0.3">Фото з відпустки · 300 МБ</option>
+              </select>
+            </div>
+            <div id="dlRows"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNOLOGIES -->
+  <section id="tech">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Технології</span>
+        <h2>Як ми проводимо інтернет</h2>
+        <p class="lead">Квартира, приватний будинок чи офіс: для кожного варіанту є своя технологія. Ми порадимо найкращу після огляду.</p>
+      </div>
+      <div class="tabs" role="tablist" id="techTabs"></div>
+      <div class="tech" id="techPanel" role="tabpanel"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Технологія</th><th>Швидкість</th><th>Пінг</th><th>Без світла</th><th>Монтаж</th><th>Для чого</th></tr>
+          </thead>
+          <tbody id="techTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="band" aria-labelledby="stepsTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Як проходить робота</span>
+        <h2 id="stepsTitle">Чотири кроки до інтернету</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">01</span><h3>Заявка</h3><p>Залиште адресу й оберіть послугу на сайті або зателефонуйте нам.</p><span class="time">2 хвилини</span></div>
+        <div class="step"><span class="n">02</span><h3>Узгодження</h3><p>Уточнюємо деталі, називаємо вартість і погоджуємо зручний час приїзду.</p><span class="time">до 30 хвилин</span></div>
+        <div class="step"><span class="n">03</span><h3>Монтаж</h3><p>Прокладаємо кабель акуратно, у кабель-каналі, і встановлюємо обладнання.</p><span class="time">1–2 години</span></div>
+        <div class="step"><span class="n">04</span><h3>Налаштування</h3><p>Налаштовуємо Wi-Fi, підключаємо ваші пристрої і заміряємо швидкість при вас.</p><span class="time">15 хвилин</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="wrap">
+      <div class="reviews-top">
+        <div class="section-head" style="margin-bottom:0">
+          <span class="eyebrow">Відгуки клієнтів</span>
+          <h2>Що кажуть клієнти</h2>
+        </div>
+        <div class="score" id="score" hidden>
+          <b id="avg">0,0</b>
+          <div><span class="stars" id="avgStars"></span><small id="avgCount"></small></div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+        <div class="filters" id="revFilters" role="group" aria-label="Фільтр відгуків">
+          <button type="button" data-f="all" aria-pressed="true">Усі</button>
+          <button type="button" data-f="5" aria-pressed="false">5 ★</button>
+          <button type="button" data-f="4" aria-pressed="false">4 ★</button>
+          <button type="button" data-f="low" aria-pressed="false">3 ★ і нижче</button>
+        </div>
+        <button class="btn btn-ghost btn-sm" data-open="review">Залишити відгук</button>
+      </div>
+      <div class="reviews" id="reviewList"></div>
+      <div class="more"><button class="btn btn-ghost btn-sm" id="moreBtn" hidden>Показати ще</button></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="band">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Часті питання</span>
+        <h2>Відповідаємо одразу</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Скільки коштує підключення?</summary><p>Стандартна прокладка домашнього інтернету по витій парі або GPON коштує <span data-uah="1000"></span> (<span data-usd="1000"></span>). Ціна може бути вищою, якщо траса довга, потрібно свердлити несучі стіни чи працювати на висоті, або якщо потрібні додаткові матеріали. Остаточну суму ми називаємо до початку робіт.</p></details>
+        <details><summary>Як працює технологія GPON?</summary><p>GPON — це оптоволокно, яке доходить прямо у квартиру чи будинок. Сигнал передається світлом, тому на нього не впливають гроза й електричні завади. Біля роутера стоїть невеликий ONT-термінал, який перетворює світло на звичайний інтернет. Швидкість сягає 1 Гбіт/с, а пінг становить 2–5 мс.</p></details>
+        <details><summary>Що таке вита пара і коли її обирати?</summary><p>Вита пара — це мідний мережевий кабель категорії Cat5e або Cat6 із вісьмома скрученими жилами. Його прокладають від щитка в під'їзді або від роутера до кімнат. Він дає до 1 Гбіт/с на відстані до 100 метрів і підходить для більшості квартир і для підключення телевізорів, комп'ютерів та камер.</p></details>
+        <details><summary>Навіщо потрібен коаксіальний кабель?</summary><p>Коаксіальний кабель має центральну жилу та екран. Його використовують для кабельного телебачення, аналогових камер відеоспостереження та підключення у мережах, побудованих на коаксі. Якщо у вас уже є такий кабель, ми підкажемо, чи можна його використати, або замінимо на сучасніший варіант.</p></details>
+        <details><summary>Чи працюватиме інтернет без світла?</summary><p>Оптична мережа GPON пасивна, тому під час відключень вона зазвичай працює. Вдома достатньо живити ONT-термінал і роутер від павербанка чи ДБЖ на 12 В. Ми можемо підібрати та підключити таке живлення під час монтажу. Чи працюватиме зв'язок далі, залежить від обладнання вашого провайдера.</p></details>
+        <details><summary>Навіщо mesh-мережа?</summary><p>Mesh — це кілька Wi-Fi модулів, які разом створюють одну мережу на весь дім. Телефон сам перемикається між ними без розривів. Це рішення для великих квартир, будинків на кілька поверхів і місць, куди не дістає звичайний роутер.</p></details>
+        <details><summary>Хто відповідає за швидкість інтернету після підключення?</summary><p>Ми відповідаємо за якість монтажу та налаштування на момент здачі робіт і заміряємо швидкість при вас. Подальша швидкість і стабільність залежать від вашого інтернет-провайдера та тарифу. Детальніше у <a class="policy-link" href="policy.html">політиці та умовах</a>.</p></details>
+        <details><summary>Чи можна використати свій роутер?</summary><p>Так. Ми налаштуємо ваш роутер. Якщо він застарілий і обмежує швидкість, скажемо про це під час візиту та порадимо заміну.</p></details>
+        <details><summary>Як оплачувати роботу?</summary><p>Оплата після виконання робіт готівкою або переказом на картку. Для великих об'єктів погоджуємо аванс на матеріали заздалегідь.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINI CONTACTS -->
+  <section class="mini-contacts" aria-labelledby="miniTitle">
+    <div class="wrap mini-grid">
+      <div>
+        <h2 id="miniTitle">Зв'яжіться з нами</h2>
+        <div class="mini-list">
+          <span><small>Ім'я</small><b>Mirtur</b></span>
+          <span><small>Телефон</small><b>+380 93 068 42 31</b></span>
+          <span><small>Telegram</small><b>@mirtur_home_mesh</b></span>
+          <span><small>Пошта</small><b>mirturua@gmail.com</b></span>
+        </div>
+      </div>
+      <button class="btn btn-primary" data-open="lead">Зареєструвати підключення</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> Mirtur. Монтаж інтернету, mesh, IP-телефонії та відеоспостереження.</span>
+    <nav aria-label="Нижнє меню">
+      <a href="#services">Послуги</a><a href="#tech">Технології</a><a href="#reviews">Відгуки</a>
+      <a class="policy-link" href="policy.html">Політика та умови</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- LEAD MODAL -->
+<div class="modal" id="leadModal" hidden role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <button class="icon-btn modal-close" data-close aria-label="Закрити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div id="leadFormWrap" style="display:grid;gap:18px">
+      <div style="display:grid;gap:6px;padding-right:40px">
+        <span class="eyebrow">Реєстрація підключення</span>
+        <h2 id="leadTitle" style="font-size:1.5rem">Зареєструвати підключення</h2>
+        <p style="color:var(--muted);font-size:14px" id="leadPrice"></p>
+      </div>
+      <form id="leadForm" class="form-grid" novalidate>
+            <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="field full"><label for="lService">Послуга</label><select id="lService"></select></div>
+        <div class="field"><label for="lName">Ім'я</label><input id="lName" autocomplete="name" placeholder="Як до вас звертатися"><span class="err"></span></div>
+        <div class="field"><label for="lPhone">Телефон</label><input id="lPhone" type="tel" autocomplete="tel" placeholder="+380 __ ___ __ __"><span class="err"></span></div>
+        <div class="field"><label for="lRegion">Регіон</label>
+          <select id="lRegion"><option>м. Київ та область</option><option>м. Чернігів та область</option><option>м. Черкаси та область</option></select>
+        </div>
+        <div class="field"><label for="lHome">Тип приміщення</label>
+          <select id="lHome"><option>Квартира</option><option>Приватний будинок</option><option>Офіс</option><option>Дача</option></select>
+        </div>
+        <div class="field full"><label for="lAddress">Адреса підключення</label><input id="lAddress" autocomplete="street-address" placeholder="Місто, вулиця, будинок, квартира"><span class="err"></span></div>
+        <div class="field full"><label for="lEmail">Пошта <span style="color:var(--muted);font-weight:400">(необов'язково)</span></label><input id="lEmail" type="email" autocomplete="email" placeholder="you@gmail.com"><span class="err"></span></div>
+        <div class="field full"><label for="lDetails">Деталі</label><textarea id="lDetails" maxlength="800" placeholder=""></textarea></div>
+        <div class="field full"><label for="lTime">Коли зручно прийняти дзвінок</label>
+          <select id="lTime"><option>Якнайшвидше</option><option>Зранку (08–12)</option><option>Вдень (12–17)</option><option>Ввечері (17–21)</option></select>
+        </div>
+        <label class="consent full"><input type="checkbox" id="lConsent"> <span>Погоджуюся з <a href="policy.html">політикою та умовами</a> і на обробку моїх даних для зв'язку щодо підключення.</span></label>
+        <div class="full"><button class="btn btn-primary" type="submit" id="leadSubmit" style="width:100%">Зареєструвати підключення</button></div>
+        <div class="full form-msg bad" id="leadErr" hidden></div>
+      </form>
+    </div>
+    <div class="success" id="leadOk" hidden>
+      <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
+      <h2 style="font-size:1.4rem">Підключення зареєстровано</h2>
+      <p style="color:var(--muted)">Номер заявки <span class="ticket" id="ticket"></span>. Ми зв'яжемося з вами найближчим часом.</p>
+      <button class="btn btn-ghost" data-close>Готово</button>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEW MODAL -->
+<div class="modal" id="reviewModal" hidden role="dialog" aria-modal="true" aria-labelledby="revTitle">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <button class="icon-btn modal-close" data-close aria-label="Закрити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div style="display:grid;gap:6px;padding-right:40px">
+      <span class="eyebrow">Ваш відгук</span>
+      <h2 id="revTitle" style="font-size:1.5rem">Як вам робота Mirtur?</h2>
+    </div>
+    <form id="reviewForm" class="form-grid" novalidate>
+            <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="field full">
+        <span class="label">Оцінка</span>
+        <div class="rate" role="radiogroup" aria-label="Оцінка">
+          <input type="radio" name="rate" id="r5" value="5" checked><label for="r5" title="5">★</label>
+          <input type="radio" name="rate" id="r4" value="4"><label for="r4" title="4">★</label>
+          <input type="radio" name="rate" id="r3" value="3"><label for="r3" title="3">★</label>
+          <input type="radio" name="rate" id="r2" value="2"><label for="r2" title="2">★</label>
+          <input type="radio" name="rate" id="r1" value="1"><label for="r1" title="1">★</label>
+        </div>
+      </div>
+      <div class="field"><label for="rName">Ім'я</label><input id="rName" maxlength="40" autocomplete="name" placeholder="Як вас підписати"><span class="err"></span></div>
+      <div class="field"><label for="rEmail">Ваша пошта</label><input id="rEmail" type="email" maxlength="80" autocomplete="email" placeholder="you@gmail.com"><span class="err"></span><span class="hint">На сайті покажемо лише частину адреси.</span></div>
+      <div class="field"><label for="rService">Послуга</label><select id="rService"></select></div>
+      <div class="field"><label for="rCity">Місто</label><input id="rCity" maxlength="40" placeholder="Необов'язково"></div>
+      <div class="field full"><label for="rText">Відгук</label><textarea id="rText" maxlength="600" placeholder="Як пройшов монтаж, як працює інтернет"></textarea><span class="err"></span></div>
+      <div class="full"><button class="btn btn-primary" type="submit" id="revSubmit" style="width:100%">Опублікувати відгук</button></div>
+      <div class="full form-msg" id="revMsg" hidden></div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+  };
+
+  /* ---------- курс: змінюйте тут ---------- */
+  const RATE = 44.85;          // гривень за 1 долар (НБУ)
+  const RATE_DATE = 'жовтень 2026';
+  const uah = n => n.toLocaleString('uk-UA').replace(/ /g, ' ') + ' ₴';
+  const usd = n => '≈ $' + Math.round(n / RATE);
+
+  /* ---------- дані ---------- */
+  const SERVICES = [
+    { id: 'internet', name: 'Прокладання інтернету', price: 1000, featured: true,
+      text: 'Кабель по витій парі або оптика GPON від щитка до вашої квартири чи будинку, з налаштуванням роутера.',
+      details: 'Скільки кімнат або поверхів? Який провайдер? Звідки тягнемо кабель?',
+      icon: '<path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0"/><circle cx="12" cy="19.5" r="1"/>' },
+    { id: 'mesh', name: 'Mesh-мережа Wi-Fi', price: 1500,
+      text: 'Кілька точок Wi-Fi, що працюють як одна мережа. Стабільний сигнал у кожній кімнаті й на кожному поверсі.',
+      details: 'Площа приміщення, кількість поверхів, чи є вже обладнання?',
+      icon: '<circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M11 7 6 16M13 7l5 9M7.2 18h9.6"/>' },
+    { id: 'voip', name: 'IP-телефонія', price: 2000,
+      text: 'Офісна або домашня телефонія через інтернет: IP-телефони, внутрішні номери, переадресація дзвінків.',
+      details: 'Скільки телефонів і внутрішніх номерів потрібно?',
+      icon: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>' },
+    { id: 'cctv', name: 'Відеоспостереження', price: 2000,
+      text: 'Прокладання кабелю та встановлення IP-камер, налаштування запису й перегляду з телефона.',
+      details: 'Скільки камер? Вулиця чи приміщення? Чи потрібен відеореєстратор?',
+      icon: '<path d="M3 7h12l4 3v4l-4 3H3z"/><circle cx="9" cy="12" r="2.5"/><path d="M19 10l3-2v8l-3-2"/>' }
+  ];
+  const SPEEDS = [
+    { speed: 100, bars: 1, use: 'для 1–3 пристроїв', text: 'Серіали без підвисань і відеодзвінки з рідними чітко, без «тебе не чути».' },
+    { speed: 300, bars: 2, use: 'для родини', text: 'Фільм у 4K на телевізорі, поки діти грають, а ви працюєте з дому. Усім вистачає.', featured: true },
+    { speed: 500, bars: 3, use: 'для геймерів', text: 'Нова гра на 50 ГБ завантажується, поки ви п\'єте каву. Пінг низький, перемоги ваші.' },
+    { speed: 1000, bars: 4, use: 'для розумного дому', text: 'Камери, розумний дім, стріми та хмара одночасно. Інтернет, про який просто забуваєш.' },
+    { speed: 2500, bars: 5, use: 'для професіоналів · XGS-PON, Cat6a', text: 'Гра на 100 ГБ за 6 хвилин. Монтаж відео, стріми й бекапи в хмару без очікування.' },
+    { speed: 8000, bars: 6, use: 'майбутнє вже тут · XGS-PON, Cat6a', text: 'Фільм у 4K за 5 секунд. Швидкість, якої вистачить на роки вперед.' }
+  ];
+  const spdLabel = n => n >= 1000 ? String(n / 1000).replace('.', ',') + ' Гбіт/с' : n + ' Мбіт/с';
+  const TECH = [
+    {
+      id: 'gpon', name: 'Оптика GPON', short: 'GPON', color: 'var(--accent)',
+      speed: 'до 1 Гбіт/с, XGS-PON до 10 Гбіт/с', ping: '2–5 мс', power: 'Так, з павербанком для ONT', mount: '1–2 год', who: 'Квартири й будинки, де провайдер має оптику',
+      text: 'Оптичне волокно заходить прямо у вашу квартиру або будинок. Біля роутера ставимо ONT-термінал, який перетворює світло на звичайний інтернет. Це найсучасніший і найстабільніший спосіб підключення.',
+      pros: ['Найвища швидкість і найменший пінг', 'Пасивна мережа працює під час відключень світла', 'Не боїться грози та електромагнітних завад'],
+      diagram: 'fiber'
+    },
+    {
+      id: 'utp', name: 'Вита пара', short: 'Вита пара Cat5e/Cat6', color: 'var(--blue)',
+      speed: 'до 1 Гбіт/с, Cat6a до 10 Гбіт/с', ping: '3–8 мс', power: 'Залежить від ДБЖ у будинку', mount: '1 год', who: 'Квартири, офіси, розводка по кімнатах',
+      text: 'Мідний мережевий кабель із вісьмома скрученими жилами. Прокладаємо його від щитка в під\'їзді або від роутера до потрібних кімнат, телевізора, комп\'ютера чи камер.',
+      pros: ['Швидкий і недорогий монтаж', 'Стабільніше за Wi-Fi для ПК, ТБ і консолей', 'До 100 метрів без втрати швидкості'],
+      diagram: 'utp'
+    },
+    {
+      id: 'coax', name: 'Коаксіальний кабель', short: 'Коаксіал', color: 'var(--muted)',
+      speed: 'до 500 Мбіт/с', ping: '10–20 мс', power: 'Залежить від провайдера', mount: '1–2 год', who: 'Кабельне ТБ, аналогові камери, старі мережі',
+      text: 'Кабель із центральною жилою та екраном. Використовується для кабельного телебачення, аналогових камер і мереж, побудованих на коаксі. Підкажемо, чи варто залишити наявний кабель, чи замінити його.',
+      pros: ['Підходить для ТБ та аналогових камер', 'Можна використати вже прокладений кабель', 'Добре захищений від завад'],
+      diagram: 'coax'
+    },
+    {
+      id: 'mesh', name: 'Mesh Wi-Fi', short: 'Mesh Wi-Fi', color: '#A06CD5',
+      speed: 'до 1 Гбіт/с між модулями', ping: '+1–3 мс', power: 'Від ДБЖ або павербанків', mount: '1–2 год', who: 'Великі квартири, будинки на кілька поверхів',
+      text: 'Кілька Wi-Fi модулів створюють одну мережу на весь дім. Телефон сам перемикається на найближчий модуль, тож сигнал однаково сильний у спальні, на кухні та на подвір\'ї.',
+      pros: ['Одна назва мережі на весь дім', 'Без «мертвих зон» і розривів', 'Легко додати ще модуль'],
+      diagram: 'mesh'
+    }
+  ];
+  const NEEDS = [
+    { id: 'people', label: 'Людей вдома', hint: 'соцмережі, сайти · 5 Мбіт/с', mbps: 5, val: 3, max: 10 },
+    { id: 'hd', label: 'Відео у HD', hint: 'YouTube, Netflix · 8 Мбіт/с', mbps: 8, val: 1, max: 8 },
+    { id: 'uhd', label: 'Відео у 4K', hint: 'Smart TV · 25 Мбіт/с', mbps: 25, val: 1, max: 6 },
+    { id: 'calls', label: 'Відеодзвінки', hint: 'Zoom, Meet · 4 Мбіт/с', mbps: 4, val: 1, max: 6 },
+    { id: 'games', label: 'Онлайн-ігри', hint: 'головне тут пінг · 10 Мбіт/с', mbps: 10, val: 0, max: 4 },
+    { id: 'cams', label: 'Камери відеоспостереження', hint: 'запис у хмару · 4 Мбіт/с', mbps: 4, val: 0, max: 16 },
+    { id: 'dl', label: 'Великі завантаження', hint: 'ігри, оновлення · 100 Мбіт/с', mbps: 100, val: 0, max: 3 },
+    { id: 'pro', label: 'Робота з великими файлами', hint: 'відеомонтаж, сервер, NAS · 500 Мбіт/с', mbps: 500, val: 0, max: 8 },
+    { id: 'smart', label: 'Розумні пристрої', hint: 'датчики, колонки · 2 Мбіт/с', mbps: 2, val: 2, max: 20 }
+  ];
+  const svc = id => SERVICES.find(s => s.id === id) || SERVICES[0];
+
+  /* ---------- ціни в розмітці ---------- */
+  $$('[data-uah]').forEach(el => el.textContent = uah(+el.dataset.uah));
+  $$('[data-usd]').forEach(el => el.textContent = usd(+el.dataset.usd));
+  $('#rateLabel').textContent = RATE.toFixed(2).replace('.', ',') + ' ₴/$ (' + RATE_DATE + ')';
+
+  /* ---------- тема ---------- */
+  const root = document.documentElement;
+  const savedTheme = store.get('mirtur-theme');
+  if (savedTheme) root.dataset.theme = savedTheme;
+  $('#themeBtn').addEventListener('click', () => {
+    const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    store.set('mirtur-theme', root.dataset.theme);
+  });
+
+  /* ---------- шапка ---------- */
+  const header = $('#header');
+  const onScroll = () => header.classList.toggle('scrolled', scrollY > 8);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const burger = $('#burger'), mnav = $('#mobileNav');
+  burger.addEventListener('click', () => {
+    const open = mnav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+  });
+  $$('#mobileNav a').forEach(a => a.addEventListener('click', () => { mnav.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }));
+  const navLinks = $$('.nav a');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => { if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id)); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['services', 'contacts', 'speeds', 'tech', 'reviews', 'faq'].forEach(id => io.observe(document.getElementById(id)));
+  }
+
+  /* ---------- toast ---------- */
+  const toastEl = $('#toast');
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.classList.add('show');
+    clearTimeout(toast.t); toast.t = setTimeout(() => toastEl.classList.remove('show'), 2200);
+  }
+
+  /* ---------- лічильник у героі ---------- */
+  let mi = 0;
+  setInterval(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    mi++;
+    $('#mSpeed').textContent = 930 + Math.round(Math.sin(mi) * 8 + Math.random() * 6);
+    $('#mPing').textContent = (2 + (mi % 3 === 0 ? 1 : 0) + Math.round(Math.random())) + ' мс';
+  }, 1600);
+
+  /* ---------- послуги ---------- */
+  $('#serviceList').innerHTML = SERVICES.map(s => `
+    <article class="service ${s.featured ? 'featured' : ''}">
+      <span class="s-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></span>
+      <h3>${s.name}</h3>
+      <div class="cost"><span class="from">від</span><b>${uah(s.price)}</b><span class="usd">${usd(s.price)}</span></div>
+      <p>${s.text}</p>
+      <button class="btn ${s.featured ? 'btn-primary' : 'btn-ghost'}" data-open="lead" data-service="${s.id}">Зареєструвати</button>
+    </article>`).join('');
+
+  /* ---------- швидкості ---------- */
+  $('#speedList').innerHTML = SPEEDS.map(s => `
+    <article class="spd ${s.featured ? 'featured' : ''}">
+      ${s.featured ? '<span class="tag">Найпопулярніша</span>' : ''}
+      <div class="bars" aria-hidden="true">${[1, 2, 3, 4, 5, 6].map(i => `<i class="${i <= s.bars ? 'on' : ''}" style="height:${Math.round(i * 100 / 6)}%"></i>`).join('')}</div>
+      <div><div class="speed">${s.speed >= 1000 ? String(s.speed / 1000).replace('.', ',') : s.speed}<small>${s.speed >= 1000 ? 'Гбіт/с' : 'Мбіт/с'}</small></div><span class="use">${s.use}</span></div>
+      <p>${s.text}</p>
+      <button class="btn ${s.featured ? 'btn-primary' : 'btn-ghost'}" data-open="lead" data-service="internet" data-speed="${s.speed}">Хочу таку швидкість</button>
+    </article>`).join('');
+
+  /* ---------- калькулятор ---------- */
+  function renderNeeds() {
+    $('#needs').innerHTML = NEEDS.map(n => `
+      <div class="need">
+        <div><b>${n.label}</b><small>${n.hint}</small></div>
+        <div class="stepper">
+          <button type="button" data-step="-1" data-id="${n.id}" aria-label="Менше: ${n.label}">−</button>
+          <output id="nv-${n.id}">${n.val}</output>
+          <button type="button" data-step="1" data-id="${n.id}" aria-label="Більше: ${n.label}">+</button>
+        </div>
+      </div>`).join('');
+  }
+  $('#needs').addEventListener('click', e => {
+    const b = e.target.closest('[data-step]'); if (!b) return;
+    const n = NEEDS.find(x => x.id === b.dataset.id);
+    n.val = Math.max(0, Math.min(n.max, n.val + Number(b.dataset.step)));
+    $('#nv-' + n.id).textContent = n.val;
+    calc();
+  });
+  let recSpeed = 300;
+  function calc() {
+    const raw = NEEDS.reduce((s, n) => s + n.val * n.mbps, 0);
+    const need = Math.ceil(raw * 1.5 / 5) * 5;
+    $('#needMbps').textContent = need;
+    const P = [0, 1000, 2500, 5000, 8000];
+    let pos = 100;
+    for (let i = 1; i < P.length; i++) if (need <= P[i]) { pos = (i - 1 + (need - P[i - 1]) / (P[i] - P[i - 1])) * 25; break; }
+    $('#needBar').style.width = Math.max(1, pos) + '%';
+    const s = SPEEDS.find(x => x.speed >= need) || SPEEDS[SPEEDS.length - 1];
+    recSpeed = s.speed;
+    $('#recText').innerHTML = need > 8000
+      ? `Вам потрібно понад 8 Гбіт/с. Радимо оптику XGS-PON і окремі кабелі Cat6a до найнавантаженіших пристроїв.`
+      : `Вам підійде швидкість <b>${spdLabel(s.speed)}</b>.${s.speed > 1000 ? ' Для неї потрібні оптика XGS-PON або кабель Cat6a та мережеве обладнання 2,5G/10G.' : ''} Запас ${Math.max(0, Math.round((s.speed / Math.max(need, 1) - 1) * 100))}%. Ми прокладемо лінію та поставимо обладнання, яке її витягне.`;
+    renderDl();
+  }
+  function fmtTime(sec) {
+    if (sec < 1) return '< 1 с';
+    if (sec < 60) return Math.round(sec) + ' с';
+    if (sec < 3600) { const m = Math.floor(sec / 60), s = Math.round(sec % 60); return m + ' хв' + (s ? ' ' + s + ' с' : ''); }
+    const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60); return h + ' год' + (m ? ' ' + m + ' хв' : '');
+  }
+  function renderDl() {
+    const gb = parseFloat($('#fileSel').value);
+    const times = SPEEDS.map(s => gb * 8000 / (s.speed * 0.9));
+    const max = Math.max(...times);
+    $('#dlRows').innerHTML = SPEEDS.map((s, i) => `
+      <div class="dl-row ${s.speed === recSpeed ? 'on' : ''}">
+        <span class="mono">${spdLabel(s.speed)}</span>
+        <span class="bar"><i style="width:${Math.max(3, times[i] / max * 100)}%"></i></span>
+        <span class="mono">${fmtTime(times[i])}</span>
+      </div>`).join('');
+  }
+  $('#fileSel').addEventListener('change', renderDl);
+
+  /* ---------- технології ---------- */
+  function diagram(kind) {
+    const house = x => `<path class="dg-box" d="M${x} 110 L${x + 30} 84 L${x + 60} 110 V150 H${x} Z"/>`;
+    const shield = `<rect class="dg-box" x="14" y="104" width="56" height="40" rx="8"/><text class="dg-text" x="22" y="128">щиток</text><text class="dg-sub" x="14" y="166">під'їзд / вулиця</text>`;
+    if (kind === 'fiber') return `
+      <svg viewBox="0 0 420 180" role="img" aria-label="Оптика від щитка до квартири">${shield}
+        <path class="dg-fiber" d="M70 124 H300"/><text class="dg-sub" x="150" y="112">оптоволокно</text>
+        ${house(300)}<rect class="dg-box" x="316" y="122" width="28" height="16" rx="3"/><text class="dg-sub" x="306" y="166">ONT + роутер</text>
+      </svg>`;
+    if (kind === 'utp') return `
+      <svg viewBox="0 0 420 180" role="img" aria-label="Вита пара від щитка до кімнат">${shield}
+        <path class="dg-copper" d="M70 124 H240"/><text class="dg-sub" x="128" y="112">вита пара Cat6</text>
+        <rect class="dg-box" x="240" y="112" width="30" height="24" rx="4"/><text class="dg-sub" x="232" y="100">роутер</text>
+        <path class="dg-copper" d="M270 118 Q 320 80 340 60"/><path class="dg-copper" d="M270 130 Q 330 140 360 150"/>
+        <rect class="dg-box" x="336" y="40" width="40" height="26" rx="4"/><text class="dg-sub" x="342" y="32">ТБ</text>
+        <rect class="dg-box" x="356" y="138" width="40" height="26" rx="4"/><text class="dg-sub" x="364" y="176">ПК</text>
+      </svg>`;
+    if (kind === 'coax') return `
+      <svg viewBox="0 0 420 180" role="img" aria-label="Коаксіальний кабель до будинку">${shield}
+        <path class="dg-coax" d="M70 124 H300"/><path class="dg-line" d="M70 124 H300" style="stroke-width:1;stroke:var(--surface)"/>
+        <text class="dg-sub" x="150" y="112">коаксіал</text>
+        ${house(300)}<rect class="dg-box" x="316" y="122" width="28" height="16" rx="3"/><text class="dg-sub" x="300" y="166">модем / ТБ</text>
+      </svg>`;
+    return `
+      <svg viewBox="0 0 420 180" role="img" aria-label="Mesh-модулі в будинку">
+        <path class="dg-box" d="M40 70 L210 14 L380 70 V168 H40 Z"/>
+        <path d="M40 118 H380" stroke="var(--line)" stroke-width="1.5"/>
+        <circle cx="110" cy="146" r="9" fill="var(--accent)"/><circle cx="300" cy="146" r="9" fill="var(--accent)"/><circle cx="210" cy="92" r="9" fill="var(--accent)"/>
+        <path class="dg-wave" d="M90 132 a 26 26 0 0 1 40 0M80 124 a 40 40 0 0 1 60 0"/>
+        <path class="dg-wave" d="M280 132 a 26 26 0 0 1 40 0M270 124 a 40 40 0 0 1 60 0"/>
+        <path class="dg-wave" d="M190 78 a 26 26 0 0 1 40 0M180 70 a 40 40 0 0 1 60 0"/>
+        <path class="dg-air" d="M118 140 L202 98M292 140 L218 98M120 146 H290"/>
+        <text class="dg-sub" x="78" y="112">1 поверх</text><text class="dg-sub" x="186" y="60">2 поверх</text>
+      </svg>`;
+  }
+  let techIdx = 0;
+  function renderTech() {
+    const t = TECH[techIdx];
+    $('#techTabs').innerHTML = TECH.map((x, i) => `<button class="tab" role="tab" id="tab-${x.id}" aria-selected="${i === techIdx}" data-i="${i}">${x.name}</button>`).join('');
+    $('#techPanel').setAttribute('aria-labelledby', 'tab-' + t.id);
+    $('#techPanel').innerHTML = `
+      <div class="tech-body">
+        <h3>${t.name}</h3>
+        <p>${t.text}</p>
+        <div class="spec">
+          <div><small>Швидкість</small><b>${t.speed}</b></div>
+          <div><small>Пінг</small><b>${t.ping}</b></div>
+          <div><small>Монтаж</small><b>${t.mount}</b></div>
+          <div><small>Без світла</small><b style="font-family:var(--f-body);font-weight:600;font-size:14px">${t.power}</b></div>
+        </div>
+        <ul class="pros">${t.pros.map(p => `<li>${p}</li>`).join('')}</ul>
+        <button class="btn btn-ghost btn-sm" style="justify-self:start" data-open="lead" data-service="${t.id === 'mesh' ? 'mesh' : 'internet'}">Зареєструвати підключення</button>
+      </div>
+      <div class="diagram">${diagram(t.diagram)}
+        <div class="legend"><span><i style="background:var(--accent)"></i>оптика / Wi-Fi</span><span><i style="background:var(--blue)"></i>вита пара</span><span><i style="background:var(--ink);opacity:.55"></i>коаксіал</span></div>
+      </div>`;
+  }
+  $('#techTabs').addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (b) { techIdx = +b.dataset.i; renderTech(); $('#tab-' + TECH[techIdx].id).focus(); } });
+  $('#techTabs').addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    techIdx = (techIdx + (e.key === 'ArrowRight' ? 1 : TECH.length - 1)) % TECH.length;
+    renderTech(); $('#tab-' + TECH[techIdx].id).focus();
+  });
+  $('#techTable').innerHTML = TECH.map(t => `
+    <tr><td><span class="dot" style="background:${t.color}"></span><b>${t.short}</b></td>
+    <td class="mono">${t.speed}</td><td class="mono">${t.ping}</td><td>${t.power}</td><td class="mono">${t.mount}</td><td>${t.who}</td></tr>`).join('');
+
+  /* ---------- списки послуг у формах ---------- */
+  $('#lService').innerHTML = SERVICES.map(s => `<option value="${s.id}">${s.name} · від ${uah(s.price)} (${usd(s.price)})</option>`).join('');
+  $('#rService').innerHTML = SERVICES.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+  function syncService() {
+    const s = svc($('#lService').value);
+    $('#leadTitle').textContent = s.name;
+    $('#leadPrice').textContent = `Від ${uah(s.price)} (${usd(s.price)}). Точну ціну назвемо після уточнення деталей, до початку робіт.`;
+    $('#lDetails').placeholder = s.details;
+  }
+  $('#lService').addEventListener('change', syncService);
+
+  /* ---------- модальні вікна ---------- */
+  let lastFocus = null;
+  function openModal(m) { lastFocus = document.activeElement; m.hidden = false; document.body.style.overflow = 'hidden'; setTimeout(() => { const f = m.querySelector('input:not([type=radio]):not([type=checkbox]),textarea'); f && f.focus(); }, 50); }
+  function closeModal(m) { m.hidden = true; document.body.style.overflow = ''; lastFocus && lastFocus.focus && lastFocus.focus(); }
+  function openLead(service, address, speed) {
+    $('#leadFormWrap').hidden = false; $('#leadOk').hidden = true; $('#leadErr').hidden = true;
+    if (service) $('#lService').value = service;
+    if (address) $('#lAddress').value = address;
+    if (speed && !$('#lDetails').value) $('#lDetails').value = `Бажана швидкість: ${speed} Мбіт/с`;
+    syncService();
+    openModal($('#leadModal'));
+  }
+  document.addEventListener('click', e => {
+    const o = e.target.closest('[data-open]');
+    if (o) {
+      e.preventDefault();
+      if (o.dataset.open === 'lead') openLead(o.dataset.service, null, o.dataset.speed);
+      else { $('#revMsg').hidden = true; openModal($('#reviewModal')); }
+      mnav.classList.remove('open');
+      return;
+    }
+    const c = e.target.closest('[data-close]');
+    if (c) closeModal(c.closest('.modal'));
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') $$('.modal').forEach(m => !m.hidden && closeModal(m)); });
+  $('#checkForm').addEventListener('submit', e => { e.preventDefault(); openLead('internet', $('#checkAddress').value.trim()); });
+
+  /* ---------- перевірка полів ---------- */
+  function setErr(input, msg) {
+    const f = input.closest('.field'); if (!f) return !msg;
+    f.classList.toggle('invalid', !!msg);
+    const e = f.querySelector('.err'); if (e) e.textContent = msg || '';
+    return !msg;
+  }
+  const phoneOk = v => v.replace(/\D/g, '').length >= 10;
+  const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  function maskPhone(el) {
+    el.addEventListener('input', () => {
+      let d = el.value.replace(/\D/g, '');
+      if (d.startsWith('0')) d = '38' + d;
+      if (d && !d.startsWith('380')) d = '380' + d.replace(/^3?8?0?/, '');
+      d = d.slice(0, 12);
+      const p = [d.slice(0, 3), d.slice(3, 5), d.slice(5, 8), d.slice(8, 10), d.slice(10, 12)].filter(Boolean);
+      el.value = p.length ? '+' + p.join(' ') : '';
+    });
+  }
+  maskPhone($('#lPhone')); maskPhone($('#cbPhone'));
+
+  /* ---------- зв'язок із Google Таблицею (Apps Script) ---------- */
+  // Вставте сюди адресу вебпрограми Apps Script, вона закінчується на /exec
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyO_6SZTWOTxEQSiyFj_gbRjJQM0Wp8R3U3epzf2VgUuYIc0bH-q1HjJh_hTv0ki331/exec';
+  const apiReady = /^https:\/\/script\.google\.com\/.+\/exec$/.test(API_URL);
+  const ticketId = () => 'MR-' + Date.now().toString(36).slice(-5).toUpperCase();
+  const hp = form => (form.querySelector('.hp') || {}).value || '';
+  async function api(action, data) {
+    if (!apiReady) throw new Error('API_URL не налаштовано');
+    const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action, ...data }) });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || 'server');
+    return json;
+  }
+
+  $('#leadForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = $('#lName'), phone = $('#lPhone'), addr = $('#lAddress'), email = $('#lEmail'), err = $('#leadErr');
+    err.hidden = true;
+    let ok = setErr(name, name.value.trim() ? '' : 'Вкажіть ім\'я');
+    ok = setErr(phone, phoneOk(phone.value) ? '' : 'Вкажіть номер повністю, 10–12 цифр') && ok;
+    ok = setErr(addr, addr.value.trim().length >= 5 ? '' : 'Вкажіть місто, вулицю та номер будинку') && ok;
+    ok = setErr(email, !email.value.trim() || emailOk(email.value.trim()) ? '' : 'Перевірте адресу пошти') && ok;
+    if (!$('#lConsent').checked) { err.textContent = 'Поставте позначку згоди з політикою та умовами.'; err.hidden = false; ok = false; }
+    if (!ok) return;
+    const btn = $('#leadSubmit'); btn.disabled = true; btn.textContent = 'Реєструємо…';
+    const ticket = ticketId();
+    const s = svc($('#lService').value);
+    try {
+      await api('lead', {
+        website: hp($('#leadForm')), type: 'service', ticket, service: s.id, serviceName: s.name, priceFrom: s.price,
+        name: name.value.trim(), phone: phone.value.trim(), email: email.value.trim(),
+        region: $('#lRegion').value, home: $('#lHome').value, address: addr.value.trim(),
+        details: $('#lDetails').value.trim(), time: $('#lTime').value
+      });
+      $('#ticket').textContent = ticket;
+      $('#leadFormWrap').hidden = true; $('#leadOk').hidden = false;
+      $('#leadForm').reset();
+    } catch {
+      err.textContent = 'Не вдалося зареєструвати підключення. Зателефонуйте нам: +380 93 068 42 31.';
+      err.hidden = false;
+    } finally { btn.disabled = false; btn.textContent = 'Зареєструвати підключення'; }
+  });
+
+  $('#callForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = $('#cbName'), phone = $('#cbPhone'), msg = $('#cbMsg');
+    let ok = setErr(name, name.value.trim() ? '' : 'Вкажіть ім\'я');
+    ok = setErr(phone, phoneOk(phone.value) ? '' : 'Вкажіть номер повністю') && ok;
+    if (!ok) return;
+    try {
+      await api('lead', { website: hp($('#callForm')), type: 'callback', ticket: ticketId(), name: name.value.trim(), phone: phone.value.trim() });
+      msg.className = 'full form-msg ok'; msg.textContent = 'Дякуємо! Ми передзвонимо вам найближчим часом.';
+      $('#callForm').reset();
+    } catch {
+      msg.className = 'full form-msg bad'; msg.textContent = 'Не вдалося надіслати запит. Зателефонуйте нам: +380 93 068 42 31.';
+    }
+    msg.hidden = false;
+  });
+
+  /* ---------- відгуки ---------- */
+  const EXAMPLES = [
+    { name: 'Ім\'я клієнта', city: 'Київ', rating: 5, service: 'internet', text: 'Тут буде справжній відгук клієнта про монтаж і роботу інтернету.' },
+    { name: 'Ім\'я клієнта', city: 'Чернігів', rating: 5, service: 'mesh', text: 'Приклад картки відгуку. Щойно клієнти залишать перші відгуки через кнопку «Залишити відгук», приклади зникнуть.' },
+    { name: 'Ім\'я клієнта', city: 'Черкаси', rating: 4, service: 'cctv', text: 'Відгуки показуються всім відвідувачам сайту. Їх можна фільтрувати за оцінкою.' }
+  ];
+  let reviews = [], filter = 'all', shown = 6;
+  const stars = n => '★'.repeat(n) + `<span class="off">${'★'.repeat(5 - n)}</span>`;
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmtDate = iso => { try { return new Date(iso).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long', year: 'numeric' }); } catch { return ''; } };
+  const maskEmail = e => { const [u, d] = e.split('@'); return (u.length <= 2 ? u[0] : u.slice(0, 2)) + '•••@' + d; };
+
+  function card(r, example) {
+    const sn = (SERVICES.find(s => s.id === r.service) || {}).name;
+    return `<article class="review ${example ? 'example' : ''}">
+      <div class="review-head">
+        <span class="avatar">${esc((r.name || '?').trim().charAt(0).toUpperCase())}</span>
+        <div><b>${esc(r.name)}</b><small>${example ? 'пошта та дата' : esc((r.emailMasked ? r.emailMasked + ' · ' : '') + fmtDate(r.createdAt))}</small></div>
+        ${example ? '<span class="example-badge">Приклад</span>' : ''}
+      </div>
+      <span class="stars" aria-label="Оцінка ${r.rating} з 5">${stars(r.rating)}</span>
+      <p>${esc(r.text)}</p>
+      <div class="meta">${sn ? `<span class="chip">${esc(sn)}</span>` : ''}${r.city ? `<span class="chip">${esc(r.city)}</span>` : ''}</div>
+    </article>`;
+  }
+  function plural(n, f) { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? f[0] : m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20) ? f[1] : f[2]; }
+  function renderReviews() {
+    const list = $('#reviewList');
+    if (!reviews.length) {
+      list.innerHTML = EXAMPLES.map(r => card(r, true)).join('') +
+        `<p class="reviews-empty">Відгуків ще немає. Станьте першим: натисніть «Залишити відгук» і вкажіть свою пошту.</p>`;
+      $('#score').hidden = true; $('#moreBtn').hidden = true;
+      return;
+    }
+    const avg = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
+    $('#avg').textContent = avg.toFixed(1).replace('.', ',');
+    $('#avgStars').innerHTML = stars(Math.round(avg));
+    $('#avgCount').textContent = `${reviews.length} ${plural(reviews.length, ['відгук', 'відгуки', 'відгуків'])}`;
+    $('#score').hidden = false;
+    const f = reviews.filter(r => filter === 'all' ? true : filter === 'low' ? r.rating <= 3 : r.rating === +filter);
+    list.innerHTML = f.length ? f.slice(0, shown).map(r => card(r)).join('') : `<p class="reviews-empty">Немає відгуків з такою оцінкою.</p>`;
+    $('#moreBtn').hidden = f.length <= shown;
+  }
+  $('#revFilters').addEventListener('click', e => {
+    const b = e.target.closest('[data-f]'); if (!b) return;
+    filter = b.dataset.f; shown = 6;
+    $$('#revFilters button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    renderReviews();
+  });
+  $('#moreBtn').addEventListener('click', () => { shown += 6; renderReviews(); });
+  function loadReviews() {
+    if (!apiReady) return;
+    fetch(API_URL + '?action=reviews')
+      .then(r => r.json())
+      .then(j => {
+        if (!j.ok) return;
+        reviews = (j.reviews || []).filter(r => r && r.text && r.rating >= 1 && r.rating <= 5);
+        renderReviews();
+      })
+      .catch(() => {});
+  }
+  loadReviews();
+
+  $('#reviewForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const name = $('#rName'), email = $('#rEmail'), text = $('#rText'), msg = $('#revMsg');
+    msg.hidden = true;
+    let ok = setErr(name, name.value.trim() ? '' : 'Вкажіть ім\'я');
+    ok = setErr(email, emailOk(email.value.trim()) ? '' : 'Вкажіть свою пошту, наприклад you@gmail.com') && ok;
+    ok = setErr(text, text.value.trim().length >= 10 ? '' : 'Напишіть хоча б одне речення') && ok;
+    if (!ok) return;
+    const btn = $('#revSubmit'); btn.disabled = true; btn.textContent = 'Публікуємо…';
+    const mail = email.value.trim().toLowerCase();
+    try {
+      const review = {
+        name: name.value.trim().slice(0, 40), emailMasked: maskEmail(mail), city: $('#rCity').value.trim().slice(0, 40),
+        rating: +($('input[name=rate]:checked') || { value: 5 }).value, service: $('#rService').value,
+        text: text.value.trim().slice(0, 600)
+      };
+      await api('review', { ...review, email: mail, website: hp($('#reviewForm')) });
+      reviews.unshift({ ...review, createdAt: new Date().toISOString() });
+      renderReviews();
+      $('#reviewForm').reset();
+      closeModal($('#reviewModal'));
+      toast('Дякуємо! Відгук опубліковано');
+    } catch {
+      msg.className = 'full form-msg bad'; msg.textContent = 'Не вдалося опублікувати відгук. Спробуйте ще раз трохи пізніше.'; msg.hidden = false;
+    } finally { btn.disabled = false; btn.textContent = 'Опублікувати відгук'; }
+  });
+
+  /* ---------- контакти ---------- */
+  $$('[data-copy]').forEach(b => b.addEventListener('click', () => {
+    const v = b.dataset.copy;
+    const fallback = () => { const el = b.previousElementSibling.querySelector('b'); const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('Виділено. Натисніть Ctrl+C'); };
+    try { navigator.clipboard.writeText(v).then(() => toast('Скопійовано: ' + v), fallback); } catch { fallback(); }
+  }));
+
+  $('#year').textContent = new Date().getFullYear();
+  renderNeeds(); calc(); renderTech(); renderReviews(); syncService();
+})();
+</script>
+</body>
+</html>
