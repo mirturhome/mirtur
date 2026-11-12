@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Mirtur — домашній інтернет</title>
-<meta name="description" content="Mirtur: прокладання домашнього інтернету по витій парі та GPON, mesh Wi-Fi, IP-телефонія та відеоспостереження. Київ, Чернігів, Черкаси та області.">
-<meta property="og:title" content="Mirtur — монтаж домашнього інтернету">
-<meta property="og:description" content="Швидко, недорого, якісно. Стандартна прокладка від 1 000 ₴.">
-<meta name="theme-color" content="#00935A">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='12.5' fill='white' stroke='%230E1F24' stroke-width='1.5'/%3E%3Cpath d='M5 17c4-8 14-8 18 0' fill='none' stroke='%2300935A' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='14' cy='17' r='2.6' fill='%231D57F0'/%3E%3C/svg%3E">
+<title>Скрутка | Мережі та зв'язок</title>
+<meta name="description" content="Скрутка: прокладання домашнього інтернету по витій парі та GPON, mesh Wi-Fi, IP-телефонія та відеоспостереження. Київ, Чернігів та області (населений пункт уточнюється по телефону). Готові конфігурації для MikroTik, Cisco, Ubiquiti, ZyXEL, TP-Link, D-Link, Alcatel.">
+<meta property="og:title" content="Скрутка | Мережі та зв'язок">
+<meta property="og:description" content="Швидко, доступно, якісно. Стандартна прокладка від 1 000 ₴.">
+<meta name="theme-color" content="#101A2C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 60'%3E%3Crect width='110' height='60' rx='14' fill='%23101A2C'/%3E%3Cpath d='M5 30C12 56 22 56 25 30S38 4 45 30 58 56 65 30 78 4 85 30 98 56 105 30' fill='none' stroke='%23E9EEF5' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M5 30C12 4 22 4 25 30S38 56 45 30 58 4 65 30 78 56 85 30 98 4 105 30' fill='none' stroke='%23F28A1E' stroke-width='9' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* базові стилі (раніше їх додавав Claude) */
 html { -webkit-text-size-adjust: 100%; }
@@ -21,21 +21,27 @@ img { max-width: 100%; }
 [hidden] { display: none !important; }
 .hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; opacity: 0; }
 
-/* Layout: one calm column of bands, cool off-white ground; the single bold move is the fiber line in the hero. Accent = APC-connector green, secondary = UPC-connector blue. */
+/* Layout: one calm column of bands. Brand "Скрутка": twisted-pair orange on deep navy; orange is the one loud colour, navy carries the rest. */
 :root {
-  --bg: #F3F6F5;
+  --bg: #F5F6F8;
   --surface: #FFFFFF;
-  --ink: #0E1F24;
-  --muted: #56686D;
-  --line: #DCE4E2;
-  --accent: #00935A;
+  --ink: #101A2C;
+  --muted: #5B6476;
+  --line: #E1E5EC;
+  --accent: #B85A06;
+  --accent-fill: #F08A1C;
+  --fill-ink: #101A2C;
   --accent-ink: #FFFFFF;
-  --accent-soft: #E2F2EA;
-  --blue: #1D57F0;
-  --blue-soft: #E5ECFE;
+  --accent-soft: #FCEBD9;
+  --blue: #2C4A7A;
+  --blue-soft: #E4EAF4;
   --star: #D99A00;
   --danger: #C2412D;
-  --shadow: 0 1px 2px rgba(14,31,36,.05), 0 8px 24px rgba(14,31,36,.06);
+  --cfg-bg: #101A2C;
+  --cfg-ink: #E9EEF5;
+  --cfg-muted: #A7B2C6;
+  --cfg-line: #2A3854;
+  --shadow: 0 1px 2px rgba(16,26,44,.05), 0 8px 24px rgba(16,26,44,.07);
   --f-display: "Unbounded", "Manrope", system-ui, sans-serif;
   --f-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -44,16 +50,16 @@ img { max-width: 100%; }
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0B1416; --surface: #122023; --ink: #E6EFED; --muted: #92A4A6; --line: #223539;
-    --accent: #2FCF8A; --accent-ink: #04170E; --accent-soft: #11332A; --blue: #7397FF; --blue-soft: #1A2647;
-    --star: #F2C14E; --danger: #FF7B66; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    --bg: #0E1626; --surface: #152036; --ink: #E9EEF5; --muted: #97A3B8; --line: #24314A;
+    --accent: #F5A040; --accent-fill: #F28A1E; --accent-ink: #101A2C; --accent-soft: #2B2418; --blue: #8DA9D9; --blue-soft: #1B2840;
+    --star: #F2C14E; --danger: #FF7B66; --cfg-bg: #0A101C; --cfg-line: #2A3854; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0B1416; --surface: #122023; --ink: #E6EFED; --muted: #92A4A6; --line: #223539;
-  --accent: #2FCF8A; --accent-ink: #04170E; --accent-soft: #11332A; --blue: #7397FF; --blue-soft: #1A2647;
-  --star: #F2C14E; --danger: #FF7B66; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  --bg: #0E1626; --surface: #152036; --ink: #E9EEF5; --muted: #97A3B8; --line: #24314A;
+  --accent: #F5A040; --accent-fill: #F28A1E; --accent-ink: #101A2C; --accent-soft: #2B2418; --blue: #8DA9D9; --blue-soft: #1B2840;
+  --star: #F2C14E; --danger: #FF7B66; --cfg-bg: #0A101C; --cfg-line: #2A3854; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
   color-scheme: dark;
 }
 
@@ -430,7 +436,8 @@ footer a:hover { color: var(--ink); }
 @media (max-width: 560px) { .services { grid-template-columns: 1fr; } .price-note { grid-template-columns: 1fr; } }
 
 /* ---------- speeds ---------- */
-.speeds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.speeds { display: flex; flex-wrap: wrap; gap: 16px; }
+.speeds > .spd { flex: 1 1 300px; }
 .spd {
   background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 24px;
   display: grid; gap: 14px; grid-template-rows: auto auto 1fr auto; position: relative; overflow: hidden;
@@ -443,8 +450,6 @@ footer a:hover { color: var(--ink); }
 .spd .use { color: var(--muted); font-size: 13px; font-family: var(--f-mono); }
 .spd.featured { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
 .spd .tag { position: absolute; top: 16px; right: 16px; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
-@media (max-width: 900px) { .speeds { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .speeds { grid-template-columns: 1fr; } }
 
 /* ---------- region chips & contacts ---------- */
 .regions { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -466,21 +471,138 @@ footer a:hover { color: var(--ink); }
 .dg-coax { stroke: var(--ink); stroke-width: 4; fill: none; opacity: .55; }
 .dg-wave { stroke: var(--accent); stroke-width: 1.6; fill: none; opacity: .7; }
 .field .hint { color: var(--muted); font-size: 12px; }
+
+/* ---------- освіження (жовтень 2026) ---------- */
+:root { --glow1: rgba(240,138,28,.16); --glow2: rgba(44,74,122,.12); --r-card: 22px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --glow1: rgba(242,138,30,.14); --glow2: rgba(141,169,217,.10); } }
+:root[data-theme="dark"] { --glow1: rgba(242,138,30,.14); --glow2: rgba(141,169,217,.10); }
+.hero { position: relative; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; inset: -20% -10% auto -10%; height: 120%; z-index: 0; pointer-events: none;
+  background: radial-gradient(40% 50% at 15% 20%, var(--glow1), transparent 70%), radial-gradient(35% 45% at 85% 30%, var(--glow2), transparent 70%);
+}
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 80%); mask-image: linear-gradient(180deg, #000, transparent 80%);
+}
+.hero .wrap { position: relative; z-index: 1; }
+.wordmark {
+  font-family: var(--f-display); font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+  font-size: clamp(2.6rem, 8vw, 5.2rem); margin-bottom: 18px; color: var(--ink);
+}
+.wordmark span { background: linear-gradient(90deg, var(--accent), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; }
+.eyebrow::before { content: ""; width: 18px; height: 2px; border-radius: 2px; background: currentColor; opacity: .7; }
+.btn-primary { background: linear-gradient(135deg, var(--accent-fill), color-mix(in srgb, var(--accent-fill) 80%, #E0560B)); color: var(--fill-ink); box-shadow: 0 6px 18px -6px var(--accent-fill); }
+.btn-primary:hover { filter: brightness(1.06); box-shadow: 0 10px 24px -8px var(--accent-fill); }
+.service, .spd, .review, .panel, .tariff, .fiber-card, .diagram { border-radius: var(--r-card); }
+.service, .spd { transition: border-color .2s, transform .25s ease, box-shadow .25s ease; }
+.service:hover, .spd:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -20px rgba(14,31,36,.35); }
+.service .s-ico { background: linear-gradient(135deg, var(--accent-soft), var(--blue-soft)); }
+.promise .ico { background: linear-gradient(135deg, var(--accent-soft), var(--blue-soft)); }
+.band { background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 60%, var(--bg))); }
+.check-form { box-shadow: 0 12px 32px -14px rgba(14,31,36,.25); }
+.check-form:focus-within { border-color: var(--accent); }
+.region-note { font-size: 13px; color: var(--muted); }
+.contact-row small + b + small { margin-top: 2px; }
+.contact-row div > small:last-child { color: var(--muted); font-size: 12px; }
+.mini-contacts { background: linear-gradient(135deg, var(--accent-soft), var(--blue-soft)); border-top: none; }
+.mini-list small { color: var(--ink); opacity: .6; }
+.check-form { max-width: 660px; }
+.check-form input { min-width: 200px; }
+@media (max-width: 700px) { .check-form { flex-direction: column; border-radius: 18px; } .check-form input { height: 44px; min-width: 0; } }
+.trio b span { font-size: inherit; color: inherit; }
+.toast { visibility: hidden; } .toast.show { visibility: visible; }
+@media (prefers-reduced-motion: reduce) { .service:hover, .spd:hover { transform: none; } }
+
+/* ---------- бренд «Скрутка» (листопад 2026) ---------- */
+.logo { gap: 10px; }
+.logo-mark { width: 44px; height: 24px; --halo: var(--bg); }
+.logo-name { font-family: var(--f-display); font-weight: 800; font-size: 19px; letter-spacing: .01em; }
+.logo-sub { font-family: var(--f-body); font-weight: 600; font-size: 12px; color: var(--muted); padding-left: 10px; border-left: 1px solid var(--line); line-height: 1.2; white-space: nowrap; }
+@media (max-width: 1380px) { .logo-sub { display: none; } }
+.brand-hero { display: flex; align-items: center; gap: clamp(14px, 2.5vw, 24px); margin-bottom: 20px; }
+.brand-mark { width: clamp(84px, 13vw, 140px); height: auto; aspect-ratio: 110 / 60; flex: none; --halo: var(--bg); }
+.wordmark { font-family: var(--f-display); font-weight: 800; letter-spacing: 0; line-height: .95; font-size: clamp(2.3rem, 7vw, 4.6rem); margin: 0; color: var(--ink); }
+.brand-tag { margin-top: 8px; font-weight: 700; color: var(--accent); font-size: clamp(1rem, 2vw, 1.3rem); display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.brand-tag small { font-weight: 500; color: var(--muted); font-size: .8em; }
+.new-pill { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 22px; padding: 6px 14px 6px 6px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 13px; font-weight: 600; box-shadow: var(--shadow); max-width: 100%; transition: border-color .2s, transform .2s; }
+.new-pill b { background: var(--accent-fill); color: var(--fill-ink); border-radius: 999px; padding: 3px 10px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; flex: none; }
+.new-pill span { min-width: 0; }
+.new-pill i { font-style: normal; color: var(--accent); }
+.new-pill:hover { border-color: var(--accent-fill); transform: translateY(-1px); }
+.tg-link { color: inherit; text-decoration-color: var(--accent-fill); text-underline-offset: 3px; }
+.tg-link:hover { color: var(--accent); }
+
+/* конфігурації */
+.configs { padding-block: 0; }
+.cfg-card { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(24px, 4vw, 48px); align-items: center;
+  background: var(--cfg-bg); color: var(--cfg-ink); border-radius: 28px; padding: clamp(24px, 4vw, 48px); border: 1px solid var(--cfg-line); }
+.cfg-card::before { content: ""; position: absolute; inset: auto -10% -60% 40%; height: 120%; background: radial-gradient(closest-side, rgba(240,138,28,.30), transparent); pointer-events: none; }
+.cfg-card > * { position: relative; min-width: 0; }
+.cfg-text { display: grid; gap: 16px; }
+.cfg-badge { justify-self: start; background: var(--accent-fill); color: #101A2C; font-weight: 800; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; }
+.cfg-text h2 { color: var(--cfg-ink); font-size: clamp(1.5rem, 3vw, 2.2rem); }
+.cfg-text p { color: var(--cfg-muted); font-size: 1.05rem; max-width: 56ch; }
+.vendors { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.vendors li { font-family: var(--f-mono); font-size: 13px; padding: 6px 12px; border-radius: 10px; border: 1px solid var(--cfg-line); background: rgba(255,255,255,.04); color: var(--cfg-ink); }
+.cfg-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 6px; }
+.cfg-tg { color: #F5A040; font-weight: 700; text-decoration: none; }
+.cfg-tg:hover { text-decoration: underline; }
+.cfg-term { background: #070C16; border: 1px solid var(--cfg-line); border-radius: 16px; overflow: hidden; box-shadow: 0 24px 60px -24px rgba(0,0,0,.6); }
+.cfg-term-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--cfg-line); }
+.cfg-term-bar i { width: 10px; height: 10px; border-radius: 50%; background: #2A3854; }
+.cfg-term-bar i:first-child { background: #F08A1C; }
+.cfg-term-bar span { margin-left: 8px; font-family: var(--f-mono); font-size: 12px; color: var(--cfg-muted); }
+.cfg-term pre { margin: 0; padding: 16px; font-family: var(--f-mono); font-size: 12.5px; line-height: 1.7; color: #D7DEEA; white-space: pre-wrap; overflow-wrap: anywhere; }
+.cfg-term .c { color: #7F8BA3; }
+.cfg-term .ok { color: #F5A040; }
+@media (max-width: 860px) { .cfg-card { grid-template-columns: 1fr; } }
+
+/* роботи */
+.gallery { columns: 3 260px; column-gap: 16px; }
+.work { break-inside: avoid; margin: 0 0 16px; display: grid; gap: 8px; }
+.work-btn { display: block; width: 100%; padding: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; background: var(--surface); cursor: zoom-in; }
+.work-btn img { display: block; width: 100%; height: auto; transition: transform .35s ease; }
+.work-btn:hover img { transform: scale(1.03); }
+.work figcaption { font-size: 13px; color: var(--muted); padding-inline: 4px; }
+.lightbox { position: fixed; inset: 0; z-index: 130; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; background: rgba(6,10,18,.92);
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.lightbox figure { margin: 0; display: grid; gap: 10px; justify-items: center; min-width: 0; }
+.lightbox img { max-width: 100%; max-height: calc(100vh - 120px); border-radius: 12px; object-fit: contain; }
+.lightbox figcaption { color: #D7DEEA; font-size: 14px; text-align: center; }
+.lb-btn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.08); color: #fff; font-size: 24px; line-height: 1; cursor: pointer; }
+.lb-btn:hover { background: rgba(255,255,255,.18); }
+.lb-close { position: absolute; top: max(16px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); font-size: 18px; }
+@media (max-width: 560px) { .lightbox { grid-template-columns: 1fr; } .lb-prev, .lb-next { position: absolute; bottom: max(20px, env(safe-area-inset-bottom, 0px)); } .lb-prev { left: 24px; } .lb-next { right: 24px; } }
+.mini-contacts { background: linear-gradient(135deg, var(--accent-soft), var(--blue-soft)); }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="skr-over"><rect x="39" y="0" width="12" height="60"/><rect x="79" y="0" width="12" height="60"/></clipPath>
+    <symbol id="skr-mark" viewBox="0 0 110 60">
+      <path d="M5 30C12 56 22 56 25 30S38 4 45 30 58 56 65 30 78 4 85 30 98 56 105 30" fill="none" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M5 30C12 4 22 4 25 30S38 56 45 30 58 4 65 30 78 56 85 30 98 4 105 30" fill="none" stroke="var(--halo, var(--bg))" stroke-width="14" stroke-linecap="round"/>
+      <path d="M5 30C12 4 22 4 25 30S38 56 45 30 58 4 65 30 78 56 85 30 98 4 105 30" fill="none" stroke="var(--accent-fill)" stroke-width="8" stroke-linecap="round"/>
+      <g clip-path="url(#skr-over)">
+        <path d="M5 30C12 56 22 56 25 30S38 4 45 30 58 56 65 30 78 4 85 30 98 56 105 30" fill="none" stroke="var(--halo, var(--bg))" stroke-width="14"/>
+        <path d="M5 30C12 56 22 56 25 30S38 4 45 30 58 56 65 30 78 4 85 30 98 56 105 30" fill="none" stroke="var(--ink)" stroke-width="8"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
 <header class="header" id="header">
   <div class="wrap">
-    <a href="#top" class="logo" aria-label="Mirtur — на початок">
-      <svg class="logo-mark" viewBox="0 0 28 28" aria-hidden="true">
-        <circle cx="14" cy="14" r="12.5" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
-        <path d="M5 17c4-8 14-8 18 0" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/>
-        <circle cx="14" cy="17" r="2.6" fill="var(--blue)"/>
-      </svg>
-      Mirtur
+    <a href="#top" class="logo" aria-label="Скрутка — на початок">
+      <svg class="logo-mark" viewBox="0 0 110 60" aria-hidden="true"><use href="#skr-mark"/></svg>
+      <span class="logo-name">Скрутка</span><span class="logo-sub">Мережі та зв'язок</span>
     </a>
     <nav class="nav" aria-label="Розділи">
       <a href="#services">Послуги</a>
+      <a href="#works">Роботи</a>
       <a href="#contacts">Контакти</a>
       <a href="#speeds">Швидкість</a>
       <a href="#tech">Технології</a>
@@ -491,7 +613,7 @@ footer a:hover { color: var(--ink); }
       <button class="icon-btn" id="themeBtn" aria-label="Змінити тему">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
-      <button class="btn btn-primary btn-sm" data-open="lead">Зареєструвати підключення</button>
+      <button class="btn btn-primary btn-sm" data-open="lead">Залишити заявку</button>
       <button class="icon-btn burger" id="burger" aria-label="Меню" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
@@ -499,12 +621,14 @@ footer a:hover { color: var(--ink); }
   </div>
   <nav class="mobile-nav" id="mobileNav" aria-label="Меню">
     <a href="#services">Послуги</a>
+    <a href="#works">Роботи</a>
+    <a href="#configs">Конфігурації</a>
     <a href="#contacts">Контакти</a>
     <a href="#speeds">Швидкість</a>
     <a href="#tech">Технології</a>
     <a href="#reviews">Відгуки</a>
     <a href="#faq">Питання</a>
-    <button class="btn btn-primary" data-open="lead">Зареєструвати підключення</button>
+    <button class="btn btn-primary" data-open="lead">Залишити заявку</button>
   </nav>
 </header>
 
@@ -513,18 +637,26 @@ footer a:hover { color: var(--ink); }
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow">Монтаж домашнього інтернету</span>
-        <h1 style="margin-top:14px">Проведемо інтернет у ваш дім. <span class="hl">Швидко, недорого, якісно.</span></h1>
+        <a class="new-pill" href="#configs"><b>Нове</b><span>Готові конфігурації для MikroTik, Cisco, Ubiquiti та інших</span><i aria-hidden="true">→</i></a>
+        <div class="brand-hero">
+          <svg class="brand-mark" viewBox="0 0 110 60" aria-hidden="true"><use href="#skr-mark"/></svg>
+          <div>
+            <div class="wordmark">СКРУТКА</div>
+            <div class="brand-tag">Мережі та зв'язок <small>by Mirtur</small></div>
+          </div>
+        </div>
+        <span class="eyebrow">Монтаж мереж для дому та офісу</span>
+        <h1 style="margin-top:14px">Прокладемо інтернет у ваш дім. <span class="hl">Швидко, доступно, якісно.</span></h1>
         <p class="lead">Прокладаємо кабель по витій парі або оптиці GPON, налаштовуємо роутери та mesh Wi-Fi, встановлюємо IP-телефонію і камери відеоспостереження.</p>
         <form class="check-form" id="checkForm" novalidate>
-          <input id="checkAddress" type="text" placeholder="Ваша адреса: місто, вулиця, будинок" aria-label="Адреса підключення" autocomplete="street-address">
+          <input id="checkAddress" type="text" placeholder="Ваша адреса: населений пункт, вулиця, будинок" aria-label="Адреса підключення" autocomplete="street-address">
           <button class="btn btn-primary" type="submit">Зареєструвати підключення за адресою</button>
         </form>
-        <p class="hero-note">Вкажіть адресу, оберіть послугу, і ми зв'яжемося з вами, щоб погодити час і вартість.</p>
+        <p class="hero-note">Після заявки ми передзвонимо, щоб погодити час і вартість.</p>
         <div class="trio">
           <div><b>за 1 день</b><span>від заявки до роботи</span></div>
           <div><b style="font-family:var(--f-display)">від <span data-uah="1000"></span></b><span>стандартна прокладка, <span data-usd="1000"></span></span></div>
-          <div><b>3 області</b><span>Київ, Чернігів, Черкаси</span></div>
+          <div><b>2 області</b><span>Київ і Чернігів; населений пункт уточнюємо по телефону</span></div>
         </div>
       </div>
 
@@ -557,22 +689,22 @@ footer a:hover { color: var(--ink); }
   </section>
 
   <!-- PROMISES -->
-  <section class="band" aria-label="Чому Mirtur">
+  <section class="band" aria-label="Чому Скрутка">
     <div class="wrap promise">
       <div>
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
         <h3>Швидко</h3>
-        <p>Приїжджаємо в день заявки або в зручний для вас час. Стандартна прокладка займає 1–2 години разом із налаштуванням.</p>
+        <p>Приїжджаємо в день заявки або в зручний для вас час. Монтаж разом із налаштуванням займає 1–2 години.</p>
       </div>
       <div>
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.6-1-1.7-1.5-3-1.5-1.7 0-3 .9-3 2.2 0 3 6 1.6 6 4.6 0 1.3-1.3 2.2-3 2.2-1.4 0-2.6-.6-3.1-1.6M12 6v2m0 8v2"/></svg></span>
-        <h3>Недорого</h3>
-        <p>Стандартна прокладка коштує <span data-uah="1000"></span>. Остаточну ціну називаємо до початку робіт, і вона вже не змінюється.</p>
+        <h3>Доступно</h3>
+        <p>Ціну називаємо до початку робіт, і далі вона не змінюється. Матеріали підбираємо під ваш бюджет.</p>
       </div>
       <div>
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
         <h3>Якісно</h3>
-        <p>Кабель ховаємо в кабель-канал або плінтус, обжимаємо й тестуємо кожну лінію. Швидкість заміряємо при вас.</p>
+        <p>Ховаємо кабель у кабель-канал або плінтус, обжимаємо й тестуємо кожну лінію перед здачею.</p>
       </div>
     </div>
   </section>
@@ -583,12 +715,65 @@ footer a:hover { color: var(--ink); }
       <div class="section-head">
         <span class="eyebrow">Послуги та ціни</span>
         <h2>Що ми робимо</h2>
-        <p class="lead">Ціни вказані «від». Остаточна вартість залежить від довжини траси, складності прокладки та матеріалів. Ми називаємо її після огляду, ще до початку робіт.</p>
+        <p class="lead">Ціни вказані «від»: остаточна вартість залежить від довжини траси, складності робіт і матеріалів.</p>
       </div>
       <div class="services" id="serviceList"></div>
       <div class="price-note">
         <span class="pn-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></span>
-        <p>Стандартна прокладка домашнього інтернету по витій парі або GPON коштує <b data-uah="1000"></b> (<span data-usd="1000"></span>). Ціна в доларах орієнтовна, за курсом НБУ <span id="rateLabel" class="mono"></span>.</p>
+        <p>Ціни в доларах орієнтовні, за курсом НБУ <span id="rateLabel" class="mono"></span>. Оплата у гривнях.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFIGS -->
+  <section id="configs" class="configs" aria-labelledby="cfgTitle">
+    <div class="wrap">
+      <div class="cfg-card">
+        <div class="cfg-text">
+          <span class="cfg-badge">Нова послуга Скрутки</span>
+          <h2 id="cfgTitle">Готові конфігурації та шаблони налаштувань</h2>
+          <p>Продаж готових конфігурацій та шаблонів налаштувань для телекомунікаційного обладнання. Швидкий старт без помилок і без залучення дорогого інженера на об'єкт.</p>
+          <ul class="vendors" aria-label="Обладнання">
+            <li>MikroTik</li><li>Cisco</li><li>Ubiquiti</li><li>ZyXEL</li><li>TP-Link</li><li>D-Link</li><li>Alcatel</li>
+          </ul>
+          <div class="cfg-actions">
+            <button class="btn btn-primary" data-open="lead" data-service="configs">Замовити конфігурацію</button>
+            <a class="cfg-tg" href="https://t.me/Skrutka_home_mesh" target="_blank" rel="noopener">Запитати в Telegram →</a>
+          </div>
+        </div>
+        <div class="cfg-term" aria-hidden="true">
+          <div class="cfg-term-bar"><i></i><i></i><i></i><span>router.rsc</span></div>
+<pre><span class="c"># шаблон: дім + гостьова мережа</span>
+/interface bridge add name=bridge-lan
+/interface vlan add name=guest vlan-id=20 interface=bridge-lan
+/ip address add address=192.168.88.1/24 interface=bridge-lan
+/ip dhcp-server setup
+/ip firewall filter add chain=forward action=drop \
+    in-interface=guest out-interface=bridge-lan
+<span class="ok">✓ конфігурацію застосовано без помилок</span></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Наші роботи</span>
+        <h2>Фото з об'єктів</h2>
+        <p class="lead">Щитки, розводка, камери та налаштування обладнання. Так виглядає наша робота наживо.</p>
+      </div>
+      <div class="gallery" id="gallery">
+          <figure class="work"><button type="button" class="work-btn" data-i="0" aria-label="Відкрити фото: Щит: роутер TP-Link, ONU і кабель у гофрі"><img src="img/work-6.jpg" alt="Щит: роутер TP-Link, ONU і кабель у гофрі" width="736" height="981" loading="lazy" decoding="async"></button><figcaption>Щит: роутер TP-Link, ONU і кабель у гофрі</figcaption></figure>
+          <figure class="work"><button type="button" class="work-btn" data-i="1" aria-label="Відкрити фото: Роутер TP-Link, Hikvision і відеореєстратор"><img src="img/work-9.jpg" alt="Роутер TP-Link, Hikvision і відеореєстратор" width="736" height="920" loading="lazy" decoding="async"></button><figcaption>Роутер TP-Link, Hikvision і відеореєстратор</figcaption></figure>
+          <figure class="work"><button type="button" class="work-btn" data-i="2" aria-label="Відкрити фото: Комутатори й розводка витої пари"><img src="img/work-7.jpg" alt="Комутатори й розводка витої пари" width="736" height="981" loading="lazy" decoding="async"></button><figcaption>Комутатори й розводка витої пари</figcaption></figure>
+          <figure class="work"><button type="button" class="work-btn" data-i="3" aria-label="Відкрити фото: Відеоспостереження на 8 камер"><img src="img/work-8.jpg" alt="Відеоспостереження на 8 камер" width="736" height="552" loading="lazy" decoding="async"></button><figcaption>Відеоспостереження на 8 камер</figcaption></figure>
+          <figure class="work"><button type="button" class="work-btn" data-i="4" aria-label="Відкрити фото: Налаштування комутаторів ZyXEL MES3500-24"><img src="img/work-5.jpg" alt="Налаштування комутаторів ZyXEL MES3500-24" width="1264" height="960" loading="lazy" decoding="async"></button><figcaption>Налаштування комутаторів ZyXEL MES3500-24</figcaption></figure>
+          <figure class="work"><button type="button" class="work-btn" data-i="5" aria-label="Відкрити фото: Щиток із MikroTik hEX і блоком живлення 12 В"><img src="img/work-4.jpg" alt="Щиток із MikroTik hEX і блоком живлення 12 В" width="1400" height="788" loading="lazy" decoding="async"></button><figcaption>Щиток із MikroTik hEX і блоком живлення 12 В</figcaption></figure>
+          <figure class="work"><button type="button" class="work-btn" data-i="6" aria-label="Відкрити фото: Купольна IP-камера під стелею"><img src="img/work-2.jpg" alt="Купольна IP-камера під стелею" width="1400" height="788" loading="lazy" decoding="async"></button><figcaption>Купольна IP-камера під стелею</figcaption></figure>
+          <figure class="work"><button type="button" class="work-btn" data-i="7" aria-label="Відкрити фото: Роутер на стіні, кабелі заведені знизу"><img src="img/work-3.jpg" alt="Роутер на стіні, кабелі заведені знизу" width="787" height="1400" loading="lazy" decoding="async"></button><figcaption>Роутер на стіні, кабелі заведені знизу</figcaption></figure>
+          <figure class="work"><button type="button" class="work-btn" data-i="8" aria-label="Відкрити фото: MikroTik hEX, PoE-інжектор і живлення камер"><img src="img/work-1.jpg" alt="MikroTik hEX, PoE-інжектор і живлення камер" width="788" height="1400" loading="lazy" decoding="async"></button><figcaption>MikroTik hEX, PoE-інжектор і живлення камер</figcaption></figure>
       </div>
     </div>
   </section>
@@ -598,7 +783,7 @@ footer a:hover { color: var(--ink); }
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Контакти</span>
-        <h2>Зв'яжіться з нами зручним способом</h2>
+        <h2>Ми на зв'язку</h2>
       </div>
       <div class="contacts">
         <div class="panel">
@@ -610,8 +795,8 @@ footer a:hover { color: var(--ink); }
             </div>
             <div class="contact-row">
               <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 3-9.5 18-2.5-8-8-2.5z"/></svg></span>
-              <div><small>Telegram</small><b>@mirtur_home_mesh</b></div>
-              <button class="copy" data-copy="@mirtur_home_mesh">Копіювати</button>
+              <div><small>Telegram</small><b><a class="tg-link" href="https://t.me/Skrutka_home_mesh" target="_blank" rel="noopener">t.me/Skrutka_home_mesh</a></b></div>
+              <button class="copy" data-copy="https://t.me/Skrutka_home_mesh">Копіювати</button>
             </div>
             <div class="contact-row">
               <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></span>
@@ -620,7 +805,7 @@ footer a:hover { color: var(--ink); }
             </div>
             <div class="contact-row">
               <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-              <div><small>Де працюємо</small><b>Київ, Чернігів, Черкаси та області</b></div>
+              <div><small>Де працюємо</small><b>Київ, Чернігів та області</b><small>місто чи село в області уточнюється по телефону</small></div>
               <span></span>
             </div>
           </div>
@@ -633,8 +818,8 @@ footer a:hover { color: var(--ink); }
           <div class="regions">
             <span class="region">м. Київ та область</span>
             <span class="region">м. Чернігів та область</span>
-            <span class="region">м. Черкаси та область</span>
           </div>
+          <p class="region-note">Виїжджаємо і в населені пункти областей. Ваше місто чи село уточнюйте по телефону.</p>
           <hr style="border:none;border-top:1px solid var(--line);margin:0">
           <h3 style="font-size:1.2rem">Передзвонимо вам</h3>
           <form id="callForm" class="form-grid" novalidate>
@@ -653,9 +838,9 @@ footer a:hover { color: var(--ink); }
   <section id="speeds">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Швидкість</span>
+        <span class="eyebrow">Що дає швидкість</span>
         <h2>Оберіть швидкість</h2>
-        <p class="lead">Ми прокладаємо лінію і ставимо обладнання, яке витягне потрібну вам швидкість. Ось що вона дає на практиці.</p>
+        <p class="lead">Ми прокладемо лінію та поставимо обладнання саме під неї.</p>
       </div>
       <div class="speeds" id="speedList"></div>
     </div>
@@ -667,7 +852,7 @@ footer a:hover { color: var(--ink); }
       <div class="section-head">
         <span class="eyebrow">Підбір швидкості</span>
         <h2>Скільки швидкості потрібно саме вам?</h2>
-        <p class="lead">Вкажіть, як вдома користуються інтернетом одночасно. Ми порахуємо потрібну швидкість із запасом.</p>
+        <p class="lead">Вкажіть, що вдома працює одночасно, і калькулятор порахує швидкість із запасом.</p>
       </div>
       <div class="calc">
         <div class="panel need-list" id="needs"></div>
@@ -678,11 +863,11 @@ footer a:hover { color: var(--ink); }
           </div>
           <div>
             <div class="scale"><i id="needBar" style="width:0%"></i></div>
-            <div class="scale-labels" style="margin-top:6px"><span>0</span><span>1 Гбіт/с</span><span>2,5</span><span>5</span><span>8 Гбіт/с</span></div>
+            <div class="scale-labels" style="margin-top:6px"><span>0</span><span>500</span><span>1 Гбіт/с</span><span>1,5</span><span>2,5 Гбіт/с</span></div>
           </div>
           <div class="rec">
             <p id="recText"></p>
-            <button class="btn btn-primary btn-sm" data-open="lead" data-service="internet" style="justify-self:start">Зареєструвати підключення</button>
+            <button class="btn btn-primary btn-sm" data-open="lead" data-service="internet" style="justify-self:start">Залишити заявку</button>
           </div>
           <div class="dl">
             <div class="dl-head">
@@ -730,9 +915,9 @@ footer a:hover { color: var(--ink); }
         <h2 id="stepsTitle">Чотири кроки до інтернету</h2>
       </div>
       <div class="steps">
-        <div class="step"><span class="n">01</span><h3>Заявка</h3><p>Залиште адресу й оберіть послугу на сайті або зателефонуйте нам.</p><span class="time">2 хвилини</span></div>
-        <div class="step"><span class="n">02</span><h3>Узгодження</h3><p>Уточнюємо деталі, називаємо вартість і погоджуємо зручний час приїзду.</p><span class="time">до 30 хвилин</span></div>
-        <div class="step"><span class="n">03</span><h3>Монтаж</h3><p>Прокладаємо кабель акуратно, у кабель-каналі, і встановлюємо обладнання.</p><span class="time">1–2 години</span></div>
+        <div class="step"><span class="n">01</span><h3>Заявка</h3><p>Залиште заявку на сайті або зателефонуйте.</p><span class="time">2 хвилини</span></div>
+        <div class="step"><span class="n">02</span><h3>Узгодження</h3><p>Уточнюємо деталі й населений пункт, називаємо вартість і час приїзду.</p><span class="time">до 30 хвилин</span></div>
+        <div class="step"><span class="n">03</span><h3>Монтаж</h3><p>Акуратно прокладаємо кабель і встановлюємо обладнання.</p><span class="time">1–2 години</span></div>
         <div class="step"><span class="n">04</span><h3>Налаштування</h3><p>Налаштовуємо Wi-Fi, підключаємо ваші пристрої і заміряємо швидкість при вас.</p><span class="time">15 хвилин</span></div>
       </div>
     </div>
@@ -773,14 +958,15 @@ footer a:hover { color: var(--ink); }
         <h2>Відповідаємо одразу</h2>
       </div>
       <div class="faq">
-        <details open><summary>Скільки коштує підключення?</summary><p>Стандартна прокладка домашнього інтернету по витій парі або GPON коштує <span data-uah="1000"></span> (<span data-usd="1000"></span>). Ціна може бути вищою, якщо траса довга, потрібно свердлити несучі стіни чи працювати на висоті, або якщо потрібні додаткові матеріали. Остаточну суму ми називаємо до початку робіт.</p></details>
-        <details><summary>Як працює технологія GPON?</summary><p>GPON — це оптоволокно, яке доходить прямо у квартиру чи будинок. Сигнал передається світлом, тому на нього не впливають гроза й електричні завади. Біля роутера стоїть невеликий ONT-термінал, який перетворює світло на звичайний інтернет. Швидкість сягає 1 Гбіт/с, а пінг становить 2–5 мс.</p></details>
+        <details open><summary>Скільки коштує підключення?</summary><p>Стандартна прокладка домашнього інтернету по витій парі або GPON коштує <span data-uah="1000"></span> (<span data-usd="1000"></span>). Ціна може бути вищою, якщо траса довга, потрібно свердлити несучі стіни чи працювати на висоті, або якщо потрібні додаткові матеріали. Ми назвемо точну суму ще до початку робіт.</p></details>
+        <details><summary>Як працює технологія GPON?</summary><p>GPON — це оптоволокно, яке доходить прямо у квартиру чи будинок. Сигнал передається світлом, тому на нього не впливають гроза й електричні завади. Біля роутера стоїть невеликий ONT-термінал, який перетворює світло на звичайний інтернет. Швидкість сягає 1 Гбіт/с, на XGS-PON до 10 Гбіт/с, а пінг становить 2–5 мс.</p></details>
         <details><summary>Що таке вита пара і коли її обирати?</summary><p>Вита пара — це мідний мережевий кабель категорії Cat5e або Cat6 із вісьмома скрученими жилами. Його прокладають від щитка в під'їзді або від роутера до кімнат. Він дає до 1 Гбіт/с на відстані до 100 метрів і підходить для більшості квартир і для підключення телевізорів, комп'ютерів та камер.</p></details>
         <details><summary>Навіщо потрібен коаксіальний кабель?</summary><p>Коаксіальний кабель має центральну жилу та екран. Його використовують для кабельного телебачення, аналогових камер відеоспостереження та підключення у мережах, побудованих на коаксі. Якщо у вас уже є такий кабель, ми підкажемо, чи можна його використати, або замінимо на сучасніший варіант.</p></details>
         <details><summary>Чи працюватиме інтернет без світла?</summary><p>Оптична мережа GPON пасивна, тому під час відключень вона зазвичай працює. Вдома достатньо живити ONT-термінал і роутер від павербанка чи ДБЖ на 12 В. Ми можемо підібрати та підключити таке живлення під час монтажу. Чи працюватиме зв'язок далі, залежить від обладнання вашого провайдера.</p></details>
         <details><summary>Навіщо mesh-мережа?</summary><p>Mesh — це кілька Wi-Fi модулів, які разом створюють одну мережу на весь дім. Телефон сам перемикається між ними без розривів. Це рішення для великих квартир, будинків на кілька поверхів і місць, куди не дістає звичайний роутер.</p></details>
-        <details><summary>Хто відповідає за швидкість інтернету після підключення?</summary><p>Ми відповідаємо за якість монтажу та налаштування на момент здачі робіт і заміряємо швидкість при вас. Подальша швидкість і стабільність залежать від вашого інтернет-провайдера та тарифу. Детальніше у <a class="policy-link" href="policy.html">політиці та умовах</a>.</p></details>
+        <details><summary>Хто відповідає за швидкість інтернету після підключення?</summary><p>Ми відповідаємо за якість монтажу й налаштування та при вас перевіряємо швидкість під час здачі робіт. Надалі швидкість і стабільність визначають ваш провайдер і тариф, але ми завжди підкажемо, до кого звернутися. Детальніше у <a class="policy-link" href="policy.html">політиці та умовах</a>.</p></details>
         <details><summary>Чи можна використати свій роутер?</summary><p>Так. Ми налаштуємо ваш роутер. Якщо він застарілий і обмежує швидкість, скажемо про це під час візиту та порадимо заміну.</p></details>
+        <details><summary>Чи працюєте ви в селах і містах області?</summary><p>Так. Ми виїжджаємо в населені пункти Київської та Чернігівської областей. Можливість і час виїзду до вашого міста чи села уточнюйте по телефону.</p></details>
         <details><summary>Як оплачувати роботу?</summary><p>Оплата після виконання робіт готівкою або переказом на картку. Для великих об'єктів погоджуємо аванс на матеріали заздалегідь.</p></details>
       </div>
     </div>
@@ -792,20 +978,20 @@ footer a:hover { color: var(--ink); }
       <div>
         <h2 id="miniTitle">Зв'яжіться з нами</h2>
         <div class="mini-list">
-          <span><small>Ім'я</small><b>Mirtur</b></span>
+          <span><small>Ім'я</small><b>Скрутка</b></span>
           <span><small>Телефон</small><b>+380 93 068 42 31</b></span>
-          <span><small>Telegram</small><b>@mirtur_home_mesh</b></span>
+          <span><small>Telegram</small><b><a class="tg-link" href="https://t.me/Skrutka_home_mesh" target="_blank" rel="noopener">t.me/Skrutka_home_mesh</a></b></span>
           <span><small>Пошта</small><b>mirturua@gmail.com</b></span>
         </div>
       </div>
-      <button class="btn btn-primary" data-open="lead">Зареєструвати підключення</button>
+      <button class="btn btn-primary" data-open="lead">Залишити заявку</button>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
-    <span>© <span id="year"></span> Mirtur. Монтаж інтернету, mesh, IP-телефонії та відеоспостереження.</span>
+    <span>© <span id="year"></span> Скрутка by Mirtur. Мережі та зв'язок: монтаж інтернету, mesh, IP-телефонії, відеоспостереження та готові конфігурації.</span>
     <nav aria-label="Нижнє меню">
       <a href="#services">Послуги</a><a href="#tech">Технології</a><a href="#reviews">Відгуки</a>
       <a class="policy-link" href="policy.html">Політика та умови</a>
@@ -820,7 +1006,7 @@ footer a:hover { color: var(--ink); }
     <button class="icon-btn modal-close" data-close aria-label="Закрити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <div id="leadFormWrap" style="display:grid;gap:18px">
       <div style="display:grid;gap:6px;padding-right:40px">
-        <span class="eyebrow">Реєстрація підключення</span>
+        <span class="eyebrow">Заявка</span>
         <h2 id="leadTitle" style="font-size:1.5rem">Зареєструвати підключення</h2>
         <p style="color:var(--muted);font-size:14px" id="leadPrice"></p>
       </div>
@@ -830,25 +1016,26 @@ footer a:hover { color: var(--ink); }
         <div class="field"><label for="lName">Ім'я</label><input id="lName" autocomplete="name" placeholder="Як до вас звертатися"><span class="err"></span></div>
         <div class="field"><label for="lPhone">Телефон</label><input id="lPhone" type="tel" autocomplete="tel" placeholder="+380 __ ___ __ __"><span class="err"></span></div>
         <div class="field"><label for="lRegion">Регіон</label>
-          <select id="lRegion"><option>м. Київ та область</option><option>м. Чернігів та область</option><option>м. Черкаси та область</option></select>
+          <select id="lRegion"><option>м. Київ та область</option><option>м. Чернігів та область</option></select>
+          <span class="hint">Місто чи село уточнимо по телефону</span>
         </div>
         <div class="field"><label for="lHome">Тип приміщення</label>
           <select id="lHome"><option>Квартира</option><option>Приватний будинок</option><option>Офіс</option><option>Дача</option></select>
         </div>
-        <div class="field full"><label for="lAddress">Адреса підключення</label><input id="lAddress" autocomplete="street-address" placeholder="Місто, вулиця, будинок, квартира"><span class="err"></span></div>
+        <div class="field full"><label for="lAddress">Адреса підключення</label><input id="lAddress" autocomplete="street-address" placeholder="Населений пункт, вулиця, будинок, квартира"><span class="err"></span></div>
         <div class="field full"><label for="lEmail">Пошта <span style="color:var(--muted);font-weight:400">(необов'язково)</span></label><input id="lEmail" type="email" autocomplete="email" placeholder="you@gmail.com"><span class="err"></span></div>
         <div class="field full"><label for="lDetails">Деталі</label><textarea id="lDetails" maxlength="800" placeholder=""></textarea></div>
         <div class="field full"><label for="lTime">Коли зручно прийняти дзвінок</label>
           <select id="lTime"><option>Якнайшвидше</option><option>Зранку (08–12)</option><option>Вдень (12–17)</option><option>Ввечері (17–21)</option></select>
         </div>
         <label class="consent full"><input type="checkbox" id="lConsent"> <span>Погоджуюся з <a href="policy.html">політикою та умовами</a> і на обробку моїх даних для зв'язку щодо підключення.</span></label>
-        <div class="full"><button class="btn btn-primary" type="submit" id="leadSubmit" style="width:100%">Зареєструвати підключення</button></div>
+        <div class="full"><button class="btn btn-primary" type="submit" id="leadSubmit" style="width:100%">Надіслати заявку</button></div>
         <div class="full form-msg bad" id="leadErr" hidden></div>
       </form>
     </div>
     <div class="success" id="leadOk" hidden>
       <span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>
-      <h2 style="font-size:1.4rem">Підключення зареєстровано</h2>
+      <h2 style="font-size:1.4rem">Заявку прийнято</h2>
       <p style="color:var(--muted)">Номер заявки <span class="ticket" id="ticket"></span>. Ми зв'яжемося з вами найближчим часом.</p>
       <button class="btn btn-ghost" data-close>Готово</button>
     </div>
@@ -862,7 +1049,7 @@ footer a:hover { color: var(--ink); }
     <button class="icon-btn modal-close" data-close aria-label="Закрити"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <div style="display:grid;gap:6px;padding-right:40px">
       <span class="eyebrow">Ваш відгук</span>
-      <h2 id="revTitle" style="font-size:1.5rem">Як вам робота Mirtur?</h2>
+      <h2 id="revTitle" style="font-size:1.5rem">Як вам робота Скрутки?</h2>
     </div>
     <form id="reviewForm" class="form-grid" novalidate>
             <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -887,8 +1074,16 @@ footer a:hover { color: var(--ink); }
   </div>
 </div>
 
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Фото з об'єкта">
+  <button class="lb-btn lb-close" data-lb="close" aria-label="Закрити">✕</button>
+  <button class="lb-btn lb-prev" data-lb="prev" aria-label="Попереднє фото">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-btn lb-next" data-lb="next" aria-label="Наступне фото">›</button>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
 
+<script src="config.js"></script>
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
@@ -921,15 +1116,16 @@ footer a:hover { color: var(--ink); }
     { id: 'cctv', name: 'Відеоспостереження', price: 2000,
       text: 'Прокладання кабелю та встановлення IP-камер, налаштування запису й перегляду з телефона.',
       details: 'Скільки камер? Вулиця чи приміщення? Чи потрібен відеореєстратор?',
-      icon: '<path d="M3 7h12l4 3v4l-4 3H3z"/><circle cx="9" cy="12" r="2.5"/><path d="M19 10l3-2v8l-3-2"/>' }
+      icon: '<path d="M3 7h12l4 3v4l-4 3H3z"/><circle cx="9" cy="12" r="2.5"/><path d="M19 10l3-2v8l-3-2"/>' },
+    { id: 'configs', name: 'Готова конфігурація обладнання', price: null,
+      details: 'Яке обладнання (виробник і модель)? Що налаштувати: інтернет, VLAN, Wi-Fi, гостьова мережа, VPN, камери?' }
   ];
   const SPEEDS = [
     { speed: 100, bars: 1, use: 'для 1–3 пристроїв', text: 'Серіали без підвисань і відеодзвінки з рідними чітко, без «тебе не чути».' },
     { speed: 300, bars: 2, use: 'для родини', text: 'Фільм у 4K на телевізорі, поки діти грають, а ви працюєте з дому. Усім вистачає.', featured: true },
     { speed: 500, bars: 3, use: 'для геймерів', text: 'Нова гра на 50 ГБ завантажується, поки ви п\'єте каву. Пінг низький, перемоги ваші.' },
     { speed: 1000, bars: 4, use: 'для розумного дому', text: 'Камери, розумний дім, стріми та хмара одночасно. Інтернет, про який просто забуваєш.' },
-    { speed: 2500, bars: 5, use: 'для професіоналів · XGS-PON, Cat6a', text: 'Гра на 100 ГБ за 6 хвилин. Монтаж відео, стріми й бекапи в хмару без очікування.' },
-    { speed: 8000, bars: 6, use: 'майбутнє вже тут · XGS-PON, Cat6a', text: 'Фільм у 4K за 5 секунд. Швидкість, якої вистачить на роки вперед.' }
+    { speed: 2500, bars: 5, use: 'для професіоналів · XGS-PON, Cat6a', text: 'Гра на 100 ГБ за 6 хвилин. Монтаж відео, стріми й бекапи в хмару без очікування.' }
   ];
   const spdLabel = n => n >= 1000 ? String(n / 1000).replace('.', ',') + ' Гбіт/с' : n + ' Мбіт/с';
   const TECH = [
@@ -1005,7 +1201,7 @@ footer a:hover { color: var(--ink); }
     const io = new IntersectionObserver(es => {
       es.forEach(e => { if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id)); });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    ['services', 'contacts', 'speeds', 'tech', 'reviews', 'faq'].forEach(id => io.observe(document.getElementById(id)));
+    ['services', 'works', 'contacts', 'speeds', 'tech', 'reviews', 'faq'].forEach(id => io.observe(document.getElementById(id)));
   }
 
   /* ---------- toast ---------- */
@@ -1025,7 +1221,7 @@ footer a:hover { color: var(--ink); }
   }, 1600);
 
   /* ---------- послуги ---------- */
-  $('#serviceList').innerHTML = SERVICES.map(s => `
+  $('#serviceList').innerHTML = SERVICES.filter(s => s.price).map(s => `
     <article class="service ${s.featured ? 'featured' : ''}">
       <span class="s-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></span>
       <h3>${s.name}</h3>
@@ -1038,7 +1234,7 @@ footer a:hover { color: var(--ink); }
   $('#speedList').innerHTML = SPEEDS.map(s => `
     <article class="spd ${s.featured ? 'featured' : ''}">
       ${s.featured ? '<span class="tag">Найпопулярніша</span>' : ''}
-      <div class="bars" aria-hidden="true">${[1, 2, 3, 4, 5, 6].map(i => `<i class="${i <= s.bars ? 'on' : ''}" style="height:${Math.round(i * 100 / 6)}%"></i>`).join('')}</div>
+      <div class="bars" aria-hidden="true">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= s.bars ? 'on' : ''}" style="height:${i * 20}%"></i>`).join('')}</div>
       <div><div class="speed">${s.speed >= 1000 ? String(s.speed / 1000).replace('.', ',') : s.speed}<small>${s.speed >= 1000 ? 'Гбіт/с' : 'Мбіт/с'}</small></div><span class="use">${s.use}</span></div>
       <p>${s.text}</p>
       <button class="btn ${s.featured ? 'btn-primary' : 'btn-ghost'}" data-open="lead" data-service="internet" data-speed="${s.speed}">Хочу таку швидкість</button>
@@ -1068,15 +1264,15 @@ footer a:hover { color: var(--ink); }
     const raw = NEEDS.reduce((s, n) => s + n.val * n.mbps, 0);
     const need = Math.ceil(raw * 1.5 / 5) * 5;
     $('#needMbps').textContent = need;
-    const P = [0, 1000, 2500, 5000, 8000];
+    const P = [0, 500, 1000, 1500, 2500];
     let pos = 100;
     for (let i = 1; i < P.length; i++) if (need <= P[i]) { pos = (i - 1 + (need - P[i - 1]) / (P[i] - P[i - 1])) * 25; break; }
     $('#needBar').style.width = Math.max(1, pos) + '%';
     const s = SPEEDS.find(x => x.speed >= need) || SPEEDS[SPEEDS.length - 1];
     recSpeed = s.speed;
-    $('#recText').innerHTML = need > 8000
-      ? `Вам потрібно понад 8 Гбіт/с. Радимо оптику XGS-PON і окремі кабелі Cat6a до найнавантаженіших пристроїв.`
-      : `Вам підійде швидкість <b>${spdLabel(s.speed)}</b>.${s.speed > 1000 ? ' Для неї потрібні оптика XGS-PON або кабель Cat6a та мережеве обладнання 2,5G/10G.' : ''} Запас ${Math.max(0, Math.round((s.speed / Math.max(need, 1) - 1) * 100))}%. Ми прокладемо лінію та поставимо обладнання, яке її витягне.`;
+    $('#recText').innerHTML = need > 2500
+      ? `Вам потрібно понад 2,5 Гбіт/с. Радимо оптику XGS-PON та окремі кабелі Cat6a до найнавантаженіших пристроїв. Деталі обговоримо по телефону.`
+      : `Вам підійде швидкість <b>${spdLabel(s.speed)}</b>.${s.speed > 1000 ? ' Для неї потрібні оптика XGS-PON або кабель Cat6a та мережеве обладнання 2,5G/10G.' : ''} Запас ${Math.max(0, Math.round((s.speed / Math.max(need, 1) - 1) * 100))}%.`;
     renderDl();
   }
   function fmtTime(sec) {
@@ -1149,7 +1345,7 @@ footer a:hover { color: var(--ink); }
           <div><small>Без світла</small><b style="font-family:var(--f-body);font-weight:600;font-size:14px">${t.power}</b></div>
         </div>
         <ul class="pros">${t.pros.map(p => `<li>${p}</li>`).join('')}</ul>
-        <button class="btn btn-ghost btn-sm" style="justify-self:start" data-open="lead" data-service="${t.id === 'mesh' ? 'mesh' : 'internet'}">Зареєструвати підключення</button>
+        <button class="btn btn-ghost btn-sm" style="justify-self:start" data-open="lead" data-service="${t.id === 'mesh' ? 'mesh' : 'internet'}">Залишити заявку</button>
       </div>
       <div class="diagram">${diagram(t.diagram)}
         <div class="legend"><span><i style="background:var(--accent)"></i>оптика / Wi-Fi</span><span><i style="background:var(--blue)"></i>вита пара</span><span><i style="background:var(--ink);opacity:.55"></i>коаксіал</span></div>
@@ -1166,12 +1362,12 @@ footer a:hover { color: var(--ink); }
     <td class="mono">${t.speed}</td><td class="mono">${t.ping}</td><td>${t.power}</td><td class="mono">${t.mount}</td><td>${t.who}</td></tr>`).join('');
 
   /* ---------- списки послуг у формах ---------- */
-  $('#lService').innerHTML = SERVICES.map(s => `<option value="${s.id}">${s.name} · від ${uah(s.price)} (${usd(s.price)})</option>`).join('');
-  $('#rService').innerHTML = SERVICES.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+  $('#lService').innerHTML = SERVICES.map(s => `<option value="${s.id}">${s.name} · ${s.price ? `від ${uah(s.price)} (${usd(s.price)})` : 'ціна за запитом'}</option>`).join('');
+  $('#rService').innerHTML = SERVICES.filter(s => s.price).map(s => `<option value="${s.id}">${s.name}</option>`).join('');
   function syncService() {
     const s = svc($('#lService').value);
     $('#leadTitle').textContent = s.name;
-    $('#leadPrice').textContent = `Від ${uah(s.price)} (${usd(s.price)}). Точну ціну назвемо після уточнення деталей, до початку робіт.`;
+    $('#leadPrice').textContent = s.price ? `Від ${uah(s.price)} (${usd(s.price)}). Точну ціну назвемо після уточнення деталей, до початку робіт.` : 'Ціну назвемо, коли уточнимо обладнання та задачу.';
     $('#lDetails').placeholder = s.details;
   }
   $('#lService').addEventListener('change', syncService);
@@ -1226,7 +1422,7 @@ footer a:hover { color: var(--ink); }
 
   /* ---------- зв'язок із Google Таблицею (Apps Script) ---------- */
   // Вставте сюди адресу вебпрограми Apps Script, вона закінчується на /exec
-  const API_URL = 'https://script.google.com/macros/s/AKfycbyO_6SZTWOTxEQSiyFj_gbRjJQM0Wp8R3U3epzf2VgUuYIc0bH-q1HjJh_hTv0ki331/exec';
+  const API_URL = String(window.SKRUTKA_API || '').trim(); // адреса задається у файлі config.js
   const apiReady = /^https:\/\/script\.google\.com\/.+\/exec$/.test(API_URL);
   const ticketId = () => 'MR-' + Date.now().toString(36).slice(-5).toUpperCase();
   const hp = form => (form.querySelector('.hp') || {}).value || '';
@@ -1248,7 +1444,7 @@ footer a:hover { color: var(--ink); }
     ok = setErr(email, !email.value.trim() || emailOk(email.value.trim()) ? '' : 'Перевірте адресу пошти') && ok;
     if (!$('#lConsent').checked) { err.textContent = 'Поставте позначку згоди з політикою та умовами.'; err.hidden = false; ok = false; }
     if (!ok) return;
-    const btn = $('#leadSubmit'); btn.disabled = true; btn.textContent = 'Реєструємо…';
+    const btn = $('#leadSubmit'); btn.disabled = true; btn.textContent = 'Надсилаємо…';
     const ticket = ticketId();
     const s = svc($('#lService').value);
     try {
@@ -1262,9 +1458,9 @@ footer a:hover { color: var(--ink); }
       $('#leadFormWrap').hidden = true; $('#leadOk').hidden = false;
       $('#leadForm').reset();
     } catch {
-      err.textContent = 'Не вдалося зареєструвати підключення. Зателефонуйте нам: +380 93 068 42 31.';
+      err.textContent = 'Не вдалося надіслати заявку. Зателефонуйте нам: +380 93 068 42 31.';
       err.hidden = false;
-    } finally { btn.disabled = false; btn.textContent = 'Зареєструвати підключення'; }
+    } finally { btn.disabled = false; btn.textContent = 'Надіслати заявку'; }
   });
 
   $('#callForm').addEventListener('submit', async e => {
@@ -1287,7 +1483,7 @@ footer a:hover { color: var(--ink); }
   const EXAMPLES = [
     { name: 'Ім\'я клієнта', city: 'Київ', rating: 5, service: 'internet', text: 'Тут буде справжній відгук клієнта про монтаж і роботу інтернету.' },
     { name: 'Ім\'я клієнта', city: 'Чернігів', rating: 5, service: 'mesh', text: 'Приклад картки відгуку. Щойно клієнти залишать перші відгуки через кнопку «Залишити відгук», приклади зникнуть.' },
-    { name: 'Ім\'я клієнта', city: 'Черкаси', rating: 4, service: 'cctv', text: 'Відгуки показуються всім відвідувачам сайту. Їх можна фільтрувати за оцінкою.' }
+    { name: 'Ім\'я клієнта', city: 'Київська обл.', rating: 4, service: 'cctv', text: 'Відгуки показуються всім відвідувачам сайту. Їх можна фільтрувати за оцінкою.' }
   ];
   let reviews = [], filter = 'all', shown = 6;
   const stars = n => '★'.repeat(n) + `<span class="off">${'★'.repeat(5 - n)}</span>`;
@@ -1379,6 +1575,26 @@ footer a:hover { color: var(--ink); }
     const fallback = () => { const el = b.previousElementSibling.querySelector('b'); const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast('Виділено. Натисніть Ctrl+C'); };
     try { navigator.clipboard.writeText(v).then(() => toast('Скопійовано: ' + v), fallback); } catch { fallback(); }
   }));
+
+  /* ---------- галерея ---------- */
+  const shots = $$('#gallery .work-btn').map(b => ({ src: b.querySelector('img').getAttribute('src'), cap: b.querySelector('img').alt }));
+  const lb = $('#lightbox'); let lbI = 0, lbBack = null;
+  function lbShow(i) { lbI = (i + shots.length) % shots.length; $('#lbImg').src = shots[lbI].src; $('#lbImg').alt = shots[lbI].cap; $('#lbCap').textContent = `${shots[lbI].cap} · ${lbI + 1}/${shots.length}`; }
+  function lbOpen(i) { lbBack = document.activeElement; lbShow(i); lb.hidden = false; document.body.style.overflow = 'hidden'; $('.lb-close').focus(); }
+  function lbClose() { lb.hidden = true; document.body.style.overflow = ''; lbBack && lbBack.focus && lbBack.focus(); }
+  $('#gallery').addEventListener('click', e => { const b = e.target.closest('.work-btn'); if (b) lbOpen(+b.dataset.i); });
+  lb.addEventListener('click', e => {
+    const a = e.target.closest('[data-lb]');
+    if (a) { a.dataset.lb === 'close' ? lbClose() : lbShow(lbI + (a.dataset.lb === 'next' ? 1 : -1)); }
+    else if (e.target === lb) lbClose();
+  });
+  document.addEventListener('keydown', e => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') lbClose(); else if (e.key === 'ArrowRight') lbShow(lbI + 1); else if (e.key === 'ArrowLeft') lbShow(lbI - 1);
+  });
+  let tx = null;
+  lb.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) lbShow(lbI + (dx < 0 ? 1 : -1)); tx = null; });
 
   $('#year').textContent = new Date().getFullYear();
   renderNeeds(); calc(); renderTech(); renderReviews(); syncService();
