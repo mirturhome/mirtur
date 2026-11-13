@@ -15,7 +15,7 @@
 <meta property="og:image" content="https://skrutka.in.ua/img/og-skrutka.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#101A2C">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 60'%3E%3Crect width='110' height='60' rx='14' fill='%23101A2C'/%3E%3Cpath d='M5 30C12 56 22 56 25 30S38 4 45 30 58 56 65 30 78 4 85 30 98 56 105 30' fill='none' stroke='%23E9EEF5' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M5 30C12 4 22 4 25 30S38 56 45 30 58 4 65 30 78 56 85 30 98 4 105 30' fill='none' stroke='%23F28A1E' stroke-width='9' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="favicon.ico" sizes="48x48">
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "Service", "name": "Встановлення mesh-мережі Wi-Fi", "serviceType": "Встановлення mesh-мережі Wi-Fi", "url": "https://skrutka.in.ua/mesh-wifi.html", "provider": {"@type": "LocalBusiness", "name": "Скрутка", "telephone": "+380930684231", "email": "mirturua@gmail.com", "url": "https://skrutka.in.ua/", "image": "https://skrutka.in.ua/img/og-skrutka.jpg", "sameAs": ["https://t.me/Skrutka_home_mesh"]}, "areaServed": [{"@type": "City", "name": "Київ"}, {"@type": "AdministrativeArea", "name": "Київська область"}, {"@type": "City", "name": "Чернігів"}, {"@type": "AdministrativeArea", "name": "Чернігівська область"}], "offers": {"@type": "Offer", "priceCurrency": "UAH", "price": 1500, "priceSpecification": {"@type": "PriceSpecification", "minPrice": 1500, "priceCurrency": "UAH"}}}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Скрутка", "item": "https://skrutka.in.ua/"}, {"@type": "ListItem", "position": 2, "name": "Mesh-мережа Wi-Fi", "item": "https://skrutka.in.ua/mesh-wifi.html"}]}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Чим mesh кращий за підсилювач сигналу?", "acceptedAnswer": {"@type": "Answer", "text": "Підсилювач створює окрему мережу і ділить швидкість навпіл. Mesh-модулі працюють як одна система: телефон перемикається між ними непомітно, швидкість стабільніша."}}, {"@type": "Question", "name": "Скільки модулів потрібно?", "acceptedAnswer": {"@type": "Answer", "text": "Зазвичай один модуль на 60–100 м² або на кожен поверх. Точну кількість скажемо після огляду."}}, {"@type": "Question", "name": "Чи можна використати мій роутер?", "acceptedAnswer": {"@type": "Answer", "text": "Залежить від моделі. Деякі роутери підтримують mesh, інші доведеться замінити. Підкажемо на огляді."}}, {"@type": "Question", "name": "Ви працюєте в області?", "acceptedAnswer": {"@type": "Answer", "text": "Так, у Києві, Чернігові та населених пунктах їхніх областей. Можливість виїзду уточнюйте по телефону."}}]}]</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -593,8 +593,8 @@ footer a:hover { color: var(--ink); }
 /* ---------- мінімалізм (листопад 2026): пласкі поверхні, більше повітря, один акцент ---------- */
 section { padding-block: clamp(64px, 9vw, 120px); }
 .hero { padding-block: clamp(48px, 8vw, 104px); }
-.hero::before, .hero::after, .cfg-card::before { display: none; }
-.hero h1 { font-size: clamp(1.8rem, 4.4vw, 3.4rem); margin-top: 0; max-width: 24ch; }
+.hero::before, .hero::after { display: none; }
+.hero h1 { font-size: clamp(1.55rem, 3.4vw, 2.6rem); margin-top: 0; max-width: 28ch; }
 .hero-grid { grid-template-columns: 1fr; }
 .hero .fiber-card { display: none; }
 .hero .trio { max-width: 760px; }
@@ -623,6 +623,27 @@ section { padding-block: clamp(64px, 9vw, 120px); }
 .service .btn { padding: 0 14px; height: 44px; }
 @media (max-width: 1100px) { .services { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); } }
 .trio > div { align-content: start; }
+
+/* ---------- послуги-плитки ---------- */
+.services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.tile { display: grid; grid-template-rows: auto auto auto 1fr auto; gap: 12px; padding: 22px; min-height: 280px; text-decoration: none; color: inherit;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; position: relative; transition: border-color .2s, transform .2s; }
+.tile:hover { border-color: var(--accent-fill); transform: translateY(-2px); }
+.tile:hover .tile-go { background: var(--accent-fill); color: var(--fill-ink); border-color: var(--accent-fill); }
+.tile-n { position: absolute; top: 20px; right: 22px; font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.tile .s-ico { width: 40px; height: 40px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.tile .s-ico svg { width: 20px; height: 20px; }
+.tile h3 { font-family: var(--f-body); font-weight: 700; font-size: 1.15rem; line-height: 1.25; letter-spacing: -0.01em; overflow-wrap: break-word; }
+.tile p { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.tile > * { min-width: 0; }
+.tile-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 14px; border-top: 1px solid var(--line); align-self: end; }
+.tile-price { min-width: 0; }
+.tile-price { font-weight: 700; font-size: 15px; }
+.tile-price small { font-family: var(--f-mono); font-weight: 400; color: var(--muted); font-size: 12px; }
+.tile-go { width: 34px; height: 34px; flex: none; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: .2s; }
+@media (max-width: 1000px) { .services { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tile { min-height: 0; } }
+@media (max-width: 560px) { .services { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .tile:hover { transform: none; } }
 
 .crumbs { font-size: 13px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
 .crumbs a { color: var(--muted); text-decoration: none; } .crumbs a:hover { color: var(--accent); }
