@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://skrutka.in.ua/</loc>
-    <lastmod>2026-11-12</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://skrutka.in.ua/policy.html</loc>
-    <lastmod>2026-11-12</lastmod>
-    <priority>0.3</priority>
-  </url>
+  <url><loc>https://skrutka.in.ua/</loc><lastmod>2026-11-13</lastmod><priority>1.0</priority></url>
+  <url><loc>https://skrutka.in.ua/internet-kyiv.html</loc><lastmod>2026-11-13</lastmod><priority>0.9</priority></url>
+  <url><loc>https://skrutka.in.ua/mesh-wifi.html</loc><lastmod>2026-11-13</lastmod><priority>0.9</priority></url>
+  <url><loc>https://skrutka.in.ua/ip-telefoniya.html</loc><lastmod>2026-11-13</lastmod><priority>0.9</priority></url>
+  <url><loc>https://skrutka.in.ua/videosposterezhennya-kyiv.html</loc><lastmod>2026-11-13</lastmod><priority>0.9</priority></url>
+  <url><loc>https://skrutka.in.ua/konfiguratsii.html</loc><lastmod>2026-11-13</lastmod><priority>0.9</priority></url>
+  <url><loc>https://skrutka.in.ua/policy.html</loc><lastmod>2026-11-12</lastmod><priority>0.3</priority></url>
 </urlset>

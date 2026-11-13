@@ -587,7 +587,66 @@ footer a:hover { color: var(--ink); }
 .lb-close { position: absolute; top: max(16px, env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); font-size: 18px; }
 @media (max-width: 560px) { .lightbox { grid-template-columns: 1fr; } .lb-prev, .lb-next { position: absolute; bottom: max(20px, env(safe-area-inset-bottom, 0px)); } .lb-prev { left: 24px; } .lb-next { right: 24px; } }
 .mini-contacts { background: linear-gradient(135deg, var(--accent-soft), var(--blue-soft)); }
+.service { display: flex; flex-direction: column; }
+.service p { flex: 1; }
+.service .more { font-size: 14px; font-weight: 700; color: var(--accent); text-decoration: none; justify-self: start; }
+.service .more:hover { text-decoration: underline; }
 .seo-note { flex-basis: 100%; margin: 0; font-size: 12px; color: var(--muted); max-width: 90ch; }
+
+/* ---------- мінімалізм (листопад 2026): пласкі поверхні, більше повітря, один акцент ---------- */
+section { padding-block: clamp(64px, 9vw, 120px); }
+.hero { padding-block: clamp(48px, 8vw, 104px); }
+.hero::before, .hero::after { display: none; }
+.hero h1 { font-size: clamp(1.55rem, 3.4vw, 2.6rem); margin-top: 0; max-width: 28ch; }
+.hero-grid { grid-template-columns: 1fr; }
+.hero .fiber-card { display: none; }
+.hero .trio { max-width: 760px; }
+.hero .check-form { max-width: 680px; }
+.hero h1 .hl { color: var(--accent); }
+.hero .check-form { margin-top: 36px; }
+.brand-hero { margin-bottom: clamp(24px, 4vw, 40px); }
+.brand-mark { width: clamp(64px, 9vw, 96px); }
+.wordmark { font-size: clamp(1.7rem, 4.4vw, 2.8rem); }
+.eyebrow::before { display: none; }
+.btn-primary, .btn-primary:hover { background: var(--accent-fill); box-shadow: none; }
+.btn-primary:hover { filter: brightness(1.05); }
+.band { background: var(--surface); }
+.check-form, .fiber-card, .new-pill { box-shadow: none; }
+.service, .spd, .review, .panel, .fiber-card, .diagram, .work-btn { border-radius: 16px; }
+.service:hover, .spd:hover { transform: none; box-shadow: none; border-color: var(--ink); }
+.service.featured, .spd.featured, .tariff.featured { box-shadow: none; }
+.service .s-ico, .promise .ico { background: var(--accent-soft); }
+.mini-contacts { background: var(--surface); border-top: 1px solid var(--line); }
+.services { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.service { padding: 20px; gap: 12px; }
+.service h3 { font-size: 1rem; }
+.service .s-ico { width: 40px; height: 40px; border-radius: 12px; }
+.service .s-ico svg { width: 20px; height: 20px; }
+.cost b { font-size: 1.35rem; }
+.service .btn { padding: 0 14px; height: 44px; }
+@media (max-width: 1100px) { .services { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); } }
+.trio > div { align-content: start; }
+
+/* ---------- послуги-плитки ---------- */
+.services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.tile { display: grid; grid-template-rows: auto auto auto 1fr auto; gap: 12px; padding: 22px; min-height: 280px; text-decoration: none; color: inherit;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; position: relative; transition: border-color .2s, transform .2s; }
+.tile:hover { border-color: var(--accent-fill); transform: translateY(-2px); }
+.tile:hover .tile-go { background: var(--accent-fill); color: var(--fill-ink); border-color: var(--accent-fill); }
+.tile-n { position: absolute; top: 20px; right: 22px; font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.tile .s-ico { width: 40px; height: 40px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.tile .s-ico svg { width: 20px; height: 20px; }
+.tile h3 { font-family: var(--f-body); font-weight: 700; font-size: 1.15rem; line-height: 1.25; letter-spacing: -0.01em; overflow-wrap: break-word; }
+.tile p { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.tile > * { min-width: 0; }
+.tile-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 14px; border-top: 1px solid var(--line); align-self: end; }
+.tile-price { min-width: 0; }
+.tile-price { font-weight: 700; font-size: 15px; }
+.tile-price small { font-family: var(--f-mono); font-weight: 400; color: var(--muted); font-size: 12px; }
+.tile-go { width: 34px; height: 34px; flex: none; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; transition: .2s; }
+@media (max-width: 1000px) { .services { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tile { min-height: 0; } }
+@media (max-width: 560px) { .services { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .tile:hover { transform: none; } }
 </style>
 </head>
 <body>
@@ -609,16 +668,14 @@ footer a:hover { color: var(--ink); }
   <div class="wrap">
     <a href="#top" class="logo" aria-label="Скрутка — на початок">
       <svg class="logo-mark" viewBox="0 0 110 60" aria-hidden="true"><use href="#skr-mark"/></svg>
-      <span class="logo-name">Скрутка</span><span class="logo-sub">Мережі та зв'язок</span>
+      <span class="logo-name">Скрутка</span>
     </a>
     <nav class="nav" aria-label="Розділи">
       <a href="#services">Послуги</a>
       <a href="#works">Роботи</a>
-      <a href="#contacts">Контакти</a>
-      <a href="#speeds">Швидкість</a>
-      <a href="#tech">Технології</a>
       <a href="#reviews">Відгуки</a>
       <a href="#faq">Питання</a>
+      <a href="#contacts">Контакти</a>
     </nav>
     <div class="header-actions">
       <button class="icon-btn" id="themeBtn" aria-label="Змінити тему">
@@ -634,11 +691,9 @@ footer a:hover { color: var(--ink); }
     <a href="#services">Послуги</a>
     <a href="#works">Роботи</a>
     <a href="#configs">Конфігурації</a>
-    <a href="#contacts">Контакти</a>
-    <a href="#speeds">Швидкість</a>
-    <a href="#tech">Технології</a>
     <a href="#reviews">Відгуки</a>
     <a href="#faq">Питання</a>
+    <a href="#contacts">Контакти</a>
     <button class="btn btn-primary" data-open="lead">Залишити заявку</button>
   </nav>
 </header>
@@ -648,17 +703,11 @@ footer a:hover { color: var(--ink); }
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <a class="new-pill" href="#configs"><b>Нове</b><span>Готові конфігурації для MikroTik, Cisco, Ubiquiti та інших</span><i aria-hidden="true">→</i></a>
         <div class="brand-hero">
           <svg class="brand-mark" viewBox="0 0 110 60" aria-hidden="true"><use href="#skr-mark"/></svg>
-          <div>
-            <div class="wordmark">СКРУТКА</div>
-            <div class="brand-tag">Мережі та зв'язок <small>by Mirtur</small></div>
-          </div>
+          <div class="wordmark">СКРУТКА</div>
         </div>
-        <span class="eyebrow">Монтаж мереж для дому та офісу</span>
-        <h1 style="margin-top:14px">Прокладемо інтернет у ваш дім. <span class="hl">Швидко, доступно, якісно.</span></h1>
-        <p class="lead">Прокладаємо кабель по витій парі або оптиці GPON, налаштовуємо роутери та mesh Wi-Fi, встановлюємо IP-телефонію і камери відеоспостереження.</p>
+        <h1>Все для вашого зв'язку та безпеки. <span class="hl">Монтаж камер, налаштування Wi-Fi та готові налаштовані конфігурації.</span></h1>
         <form class="check-form" id="checkForm" novalidate>
           <input id="checkAddress" type="text" placeholder="Ваша адреса: населений пункт, вулиця, будинок" aria-label="Адреса підключення" autocomplete="street-address">
           <button class="btn btn-primary" type="submit">Зареєструвати підключення за адресою</button>
@@ -690,11 +739,6 @@ footer a:hover { color: var(--ink); }
           </g>
           <text class="fiber-label" x="330" y="196">роутер у вас</text>
         </svg>
-        <div class="meter" aria-live="polite">
-          <div><small>Швидкість</small><b id="mSpeed">940</b></div>
-          <div><small>Пінг</small><b id="mPing">3 мс</b></div>
-          <div><small>Втрати</small><b>0 %</b></div>
-        </div>
       </div>
     </div>
   </section>
@@ -726,7 +770,7 @@ footer a:hover { color: var(--ink); }
       <div class="section-head">
         <span class="eyebrow">Послуги та ціни</span>
         <h2>Що ми робимо</h2>
-        <p class="lead">Ціни вказані «від»: остаточна вартість залежить від довжини траси, складності робіт і матеріалів.</p>
+        <p class="lead">Оберіть послугу, щоб побачити деталі, ціни та відповіді на питання.</p>
       </div>
       <div class="services" id="serviceList"></div>
       <div class="price-note">
@@ -750,6 +794,7 @@ footer a:hover { color: var(--ink); }
           <div class="cfg-actions">
             <button class="btn btn-primary" data-open="lead" data-service="configs">Замовити конфігурацію</button>
             <a class="cfg-tg" href="https://t.me/Skrutka_home_mesh" target="_blank" rel="noopener">Запитати в Telegram →</a>
+            <a class="cfg-tg" href="konfiguratsii.html">Детальніше →</a>
           </div>
         </div>
         <div class="cfg-term" aria-hidden="true">
@@ -790,7 +835,74 @@ footer a:hover { color: var(--ink); }
   </section>
 
   <!-- CONTACTS (big) -->
-  <section id="contacts" class="band">
+
+  <!-- STEPS -->
+  <section class="band" aria-labelledby="stepsTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Як проходить робота</span>
+        <h2 id="stepsTitle">Чотири кроки до інтернету</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">01</span><h3>Заявка</h3><p>Залиште заявку на сайті або зателефонуйте.</p><span class="time">2 хвилини</span></div>
+        <div class="step"><span class="n">02</span><h3>Узгодження</h3><p>Уточнюємо деталі й населений пункт, називаємо вартість і час приїзду.</p><span class="time">до 30 хвилин</span></div>
+        <div class="step"><span class="n">03</span><h3>Монтаж</h3><p>Акуратно прокладаємо кабель і встановлюємо обладнання.</p><span class="time">1–2 години</span></div>
+        <div class="step"><span class="n">04</span><h3>Налаштування</h3><p>Налаштовуємо Wi-Fi, підключаємо ваші пристрої і заміряємо швидкість при вас.</p><span class="time">15 хвилин</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="band">
+    <div class="wrap">
+      <div class="reviews-top">
+        <div class="section-head" style="margin-bottom:0">
+          <span class="eyebrow">Відгуки клієнтів</span>
+          <h2>Що кажуть клієнти</h2>
+        </div>
+        <div class="score" id="score" hidden>
+          <b id="avg">0,0</b>
+          <div><span class="stars" id="avgStars"></span><small id="avgCount"></small></div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+        <div class="filters" id="revFilters" role="group" aria-label="Фільтр відгуків">
+          <button type="button" data-f="all" aria-pressed="true">Усі</button>
+          <button type="button" data-f="5" aria-pressed="false">5 ★</button>
+          <button type="button" data-f="4" aria-pressed="false">4 ★</button>
+          <button type="button" data-f="low" aria-pressed="false">3 ★ і нижче</button>
+        </div>
+        <button class="btn btn-ghost btn-sm" data-open="review">Залишити відгук</button>
+      </div>
+      <div class="reviews" id="reviewList"></div>
+      <div class="more"><button class="btn btn-ghost btn-sm" id="moreBtn" hidden>Показати ще</button></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Часті питання</span>
+        <h2>Відповідаємо одразу</h2>
+      </div>
+      <div class="faq">
+        <details open><summary>Скільки коштує підключення?</summary><p>Стандартна прокладка домашнього інтернету по витій парі або GPON коштує <span data-uah="1000"></span> (<span data-usd="1000"></span>). Ціна може бути вищою, якщо траса довга, потрібно свердлити несучі стіни чи працювати на висоті, або якщо потрібні додаткові матеріали. Ми назвемо точну суму ще до початку робіт.</p></details>
+        <details><summary>Як працює технологія GPON?</summary><p>GPON — це оптоволокно, яке доходить прямо у квартиру чи будинок. Сигнал передається світлом, тому на нього не впливають гроза й електричні завади. Біля роутера стоїть невеликий ONT-термінал, який перетворює світло на звичайний інтернет. Швидкість сягає 1 Гбіт/с, на XGS-PON до 10 Гбіт/с, а пінг становить 2–5 мс.</p></details>
+        <details><summary>Що таке вита пара і коли її обирати?</summary><p>Вита пара — це мідний мережевий кабель категорії Cat5e або Cat6 із вісьмома скрученими жилами. Його прокладають від щитка в під'їзді або від роутера до кімнат. Він дає до 1 Гбіт/с на відстані до 100 метрів і підходить для більшості квартир і для підключення телевізорів, комп'ютерів та камер.</p></details>
+        <details><summary>Навіщо потрібен коаксіальний кабель?</summary><p>Коаксіальний кабель має центральну жилу та екран. Його використовують для кабельного телебачення, аналогових камер відеоспостереження та підключення у мережах, побудованих на коаксі. Якщо у вас уже є такий кабель, ми підкажемо, чи можна його використати, або замінимо на сучасніший варіант.</p></details>
+        <details><summary>Чи працюватиме інтернет без світла?</summary><p>Оптична мережа GPON пасивна, тому під час відключень вона зазвичай працює. Вдома достатньо живити ONT-термінал і роутер від павербанка чи ДБЖ на 12 В. Ми можемо підібрати та підключити таке живлення під час монтажу. Чи працюватиме зв'язок далі, залежить від обладнання вашого провайдера.</p></details>
+        <details><summary>Навіщо mesh-мережа?</summary><p>Mesh — це кілька Wi-Fi модулів, які разом створюють одну мережу на весь дім. Телефон сам перемикається між ними без розривів. Це рішення для великих квартир, будинків на кілька поверхів і місць, куди не дістає звичайний роутер.</p></details>
+        <details><summary>Хто відповідає за швидкість інтернету після підключення?</summary><p>Ми відповідаємо за якість монтажу й налаштування та при вас перевіряємо швидкість під час здачі робіт. Надалі швидкість і стабільність визначають ваш провайдер і тариф, але ми завжди підкажемо, до кого звернутися. Детальніше у <a class="policy-link" href="policy.html">політиці та умовах</a>.</p></details>
+        <details><summary>Чи можна використати свій роутер?</summary><p>Так. Ми налаштуємо ваш роутер. Якщо він застарілий і обмежує швидкість, скажемо про це під час візиту та порадимо заміну.</p></details>
+        <details><summary>Чи працюєте ви в селах і містах області?</summary><p>Так. Ми виїжджаємо в населені пункти Київської та Чернігівської областей. Можливість і час виїзду до вашого міста чи села уточнюйте по телефону.</p></details>
+        <details><summary>Як оплачувати роботу?</summary><p>Оплата після виконання робіт готівкою або переказом на картку. Для великих об'єктів погоджуємо аванс на матеріали заздалегідь.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section id="contacts">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Контакти</span>
@@ -845,159 +957,6 @@ footer a:hover { color: var(--ink); }
     </div>
   </section>
 
-  <!-- SPEEDS -->
-  <section id="speeds">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Що дає швидкість</span>
-        <h2>Оберіть швидкість</h2>
-        <p class="lead">Ми прокладемо лінію та поставимо обладнання саме під неї.</p>
-      </div>
-      <div class="speeds" id="speedList"></div>
-    </div>
-  </section>
-
-  <!-- SPEED CALCULATOR -->
-  <section id="speed" class="band">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Підбір швидкості</span>
-        <h2>Скільки швидкості потрібно саме вам?</h2>
-        <p class="lead">Вкажіть, що вдома працює одночасно, і калькулятор порахує швидкість із запасом.</p>
-      </div>
-      <div class="calc">
-        <div class="panel need-list" id="needs"></div>
-        <div class="panel result">
-          <div>
-            <span class="eyebrow">Потрібно у пікові години</span>
-            <div class="big" style="margin-top:8px"><span id="needMbps">0</span><small>Мбіт/с</small></div>
-          </div>
-          <div>
-            <div class="scale"><i id="needBar" style="width:0%"></i></div>
-            <div class="scale-labels" style="margin-top:6px"><span>0</span><span>500</span><span>1 Гбіт/с</span><span>1,5</span><span>2,5 Гбіт/с</span></div>
-          </div>
-          <div class="rec">
-            <p id="recText"></p>
-            <button class="btn btn-primary btn-sm" data-open="lead" data-service="internet" style="justify-self:start">Залишити заявку</button>
-          </div>
-          <div class="dl">
-            <div class="dl-head">
-              <b style="font-size:14px">Час завантаження</b>
-              <select id="fileSel" aria-label="Що завантажуємо">
-                <option value="80">Гра · 80 ГБ</option>
-                <option value="4" selected>Фільм 4K · 4 ГБ</option>
-                <option value="1.5">Сезон серіалу · 1,5 ГБ</option>
-                <option value="0.3">Фото з відпустки · 300 МБ</option>
-              </select>
-            </div>
-            <div id="dlRows"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TECHNOLOGIES -->
-  <section id="tech">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Технології</span>
-        <h2>Як ми проводимо інтернет</h2>
-        <p class="lead">Квартира, приватний будинок чи офіс: для кожного варіанту є своя технологія. Ми порадимо найкращу після огляду.</p>
-      </div>
-      <div class="tabs" role="tablist" id="techTabs"></div>
-      <div class="tech" id="techPanel" role="tabpanel"></div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Технологія</th><th>Швидкість</th><th>Пінг</th><th>Без світла</th><th>Монтаж</th><th>Для чого</th></tr>
-          </thead>
-          <tbody id="techTable"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- STEPS -->
-  <section class="band" aria-labelledby="stepsTitle">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Як проходить робота</span>
-        <h2 id="stepsTitle">Чотири кроки до інтернету</h2>
-      </div>
-      <div class="steps">
-        <div class="step"><span class="n">01</span><h3>Заявка</h3><p>Залиште заявку на сайті або зателефонуйте.</p><span class="time">2 хвилини</span></div>
-        <div class="step"><span class="n">02</span><h3>Узгодження</h3><p>Уточнюємо деталі й населений пункт, називаємо вартість і час приїзду.</p><span class="time">до 30 хвилин</span></div>
-        <div class="step"><span class="n">03</span><h3>Монтаж</h3><p>Акуратно прокладаємо кабель і встановлюємо обладнання.</p><span class="time">1–2 години</span></div>
-        <div class="step"><span class="n">04</span><h3>Налаштування</h3><p>Налаштовуємо Wi-Fi, підключаємо ваші пристрої і заміряємо швидкість при вас.</p><span class="time">15 хвилин</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- REVIEWS -->
-  <section id="reviews">
-    <div class="wrap">
-      <div class="reviews-top">
-        <div class="section-head" style="margin-bottom:0">
-          <span class="eyebrow">Відгуки клієнтів</span>
-          <h2>Що кажуть клієнти</h2>
-        </div>
-        <div class="score" id="score" hidden>
-          <b id="avg">0,0</b>
-          <div><span class="stars" id="avgStars"></span><small id="avgCount"></small></div>
-        </div>
-      </div>
-      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px">
-        <div class="filters" id="revFilters" role="group" aria-label="Фільтр відгуків">
-          <button type="button" data-f="all" aria-pressed="true">Усі</button>
-          <button type="button" data-f="5" aria-pressed="false">5 ★</button>
-          <button type="button" data-f="4" aria-pressed="false">4 ★</button>
-          <button type="button" data-f="low" aria-pressed="false">3 ★ і нижче</button>
-        </div>
-        <button class="btn btn-ghost btn-sm" data-open="review">Залишити відгук</button>
-      </div>
-      <div class="reviews" id="reviewList"></div>
-      <div class="more"><button class="btn btn-ghost btn-sm" id="moreBtn" hidden>Показати ще</button></div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="band">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Часті питання</span>
-        <h2>Відповідаємо одразу</h2>
-      </div>
-      <div class="faq">
-        <details open><summary>Скільки коштує підключення?</summary><p>Стандартна прокладка домашнього інтернету по витій парі або GPON коштує <span data-uah="1000"></span> (<span data-usd="1000"></span>). Ціна може бути вищою, якщо траса довга, потрібно свердлити несучі стіни чи працювати на висоті, або якщо потрібні додаткові матеріали. Ми назвемо точну суму ще до початку робіт.</p></details>
-        <details><summary>Як працює технологія GPON?</summary><p>GPON — це оптоволокно, яке доходить прямо у квартиру чи будинок. Сигнал передається світлом, тому на нього не впливають гроза й електричні завади. Біля роутера стоїть невеликий ONT-термінал, який перетворює світло на звичайний інтернет. Швидкість сягає 1 Гбіт/с, на XGS-PON до 10 Гбіт/с, а пінг становить 2–5 мс.</p></details>
-        <details><summary>Що таке вита пара і коли її обирати?</summary><p>Вита пара — це мідний мережевий кабель категорії Cat5e або Cat6 із вісьмома скрученими жилами. Його прокладають від щитка в під'їзді або від роутера до кімнат. Він дає до 1 Гбіт/с на відстані до 100 метрів і підходить для більшості квартир і для підключення телевізорів, комп'ютерів та камер.</p></details>
-        <details><summary>Навіщо потрібен коаксіальний кабель?</summary><p>Коаксіальний кабель має центральну жилу та екран. Його використовують для кабельного телебачення, аналогових камер відеоспостереження та підключення у мережах, побудованих на коаксі. Якщо у вас уже є такий кабель, ми підкажемо, чи можна його використати, або замінимо на сучасніший варіант.</p></details>
-        <details><summary>Чи працюватиме інтернет без світла?</summary><p>Оптична мережа GPON пасивна, тому під час відключень вона зазвичай працює. Вдома достатньо живити ONT-термінал і роутер від павербанка чи ДБЖ на 12 В. Ми можемо підібрати та підключити таке живлення під час монтажу. Чи працюватиме зв'язок далі, залежить від обладнання вашого провайдера.</p></details>
-        <details><summary>Навіщо mesh-мережа?</summary><p>Mesh — це кілька Wi-Fi модулів, які разом створюють одну мережу на весь дім. Телефон сам перемикається між ними без розривів. Це рішення для великих квартир, будинків на кілька поверхів і місць, куди не дістає звичайний роутер.</p></details>
-        <details><summary>Хто відповідає за швидкість інтернету після підключення?</summary><p>Ми відповідаємо за якість монтажу й налаштування та при вас перевіряємо швидкість під час здачі робіт. Надалі швидкість і стабільність визначають ваш провайдер і тариф, але ми завжди підкажемо, до кого звернутися. Детальніше у <a class="policy-link" href="policy.html">політиці та умовах</a>.</p></details>
-        <details><summary>Чи можна використати свій роутер?</summary><p>Так. Ми налаштуємо ваш роутер. Якщо він застарілий і обмежує швидкість, скажемо про це під час візиту та порадимо заміну.</p></details>
-        <details><summary>Чи працюєте ви в селах і містах області?</summary><p>Так. Ми виїжджаємо в населені пункти Київської та Чернігівської областей. Можливість і час виїзду до вашого міста чи села уточнюйте по телефону.</p></details>
-        <details><summary>Як оплачувати роботу?</summary><p>Оплата після виконання робіт готівкою або переказом на картку. Для великих об'єктів погоджуємо аванс на матеріали заздалегідь.</p></details>
-      </div>
-    </div>
-  </section>
-
-  <!-- MINI CONTACTS -->
-  <section class="mini-contacts" aria-labelledby="miniTitle">
-    <div class="wrap mini-grid">
-      <div>
-        <h2 id="miniTitle">Зв'яжіться з нами</h2>
-        <div class="mini-list">
-          <span><small>Ім'я</small><b>Скрутка</b></span>
-          <span><small>Телефон</small><b>+380 93 068 42 31</b></span>
-          <span><small>Telegram</small><b><a class="tg-link" href="https://t.me/Skrutka_home_mesh" target="_blank" rel="noopener">t.me/Skrutka_home_mesh</a></b></span>
-          <span><small>Пошта</small><b>mirturua@gmail.com</b></span>
-        </div>
-      </div>
-      <button class="btn btn-primary" data-open="lead">Залишити заявку</button>
-    </div>
-  </section>
 </main>
 
 <footer>
@@ -1005,6 +964,7 @@ footer a:hover { color: var(--ink); }
     <span>© <span id="year"></span> Скрутка by Mirtur. Мережі та зв'язок: монтаж інтернету, mesh, IP-телефонії, відеоспостереження та готові конфігурації.</span>
     <nav aria-label="Нижнє меню">
       <a href="#services">Послуги</a><a href="#tech">Технології</a><a href="#reviews">Відгуки</a>
+      <a href="internet-kyiv.html">Інтернет у Києві</a><a href="videosposterezhennya-kyiv.html">Відеоспостереження Київ</a><a href="konfiguratsii.html">Готові конфігурації</a>
       <a class="policy-link" href="policy.html">Політика та умови</a>
     </nav>
     <p class="seo-note">Монтаж інтернету та мереж у Києві, Київській області, Чернігові та Чернігівській області: прокладання витої пари, підключення оптики GPON, налаштування роутерів MikroTik і TP-Link, mesh Wi-Fi для квартири й будинку, монтаж IP-камер Hikvision, IP-телефонія, готові конфігурації для мережевого обладнання.</p>
@@ -1113,73 +1073,26 @@ footer a:hover { color: var(--ink); }
 
   /* ---------- дані ---------- */
   const SERVICES = [
-    { id: 'internet', name: 'Прокладання інтернету', price: 1000, featured: true,
+    { id: 'internet', name: 'Прокладання інтернету', price: 1000, featured: true, page: 'internet-kyiv.html',
       text: 'Кабель по витій парі або оптика GPON від щитка до вашої квартири чи будинку, з налаштуванням роутера.',
       details: 'Скільки кімнат або поверхів? Який провайдер? Звідки тягнемо кабель?',
       icon: '<path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a15 15 0 0 1 20 0"/><circle cx="12" cy="19.5" r="1"/>' },
-    { id: 'mesh', name: 'Mesh-мережа Wi-Fi', price: 1500,
+    { id: 'mesh', name: 'Mesh-мережа Wi-Fi', price: 1500, page: 'mesh-wifi.html',
       text: 'Кілька точок Wi-Fi, що працюють як одна мережа. Стабільний сигнал у кожній кімнаті й на кожному поверсі.',
       details: 'Площа приміщення, кількість поверхів, чи є вже обладнання?',
       icon: '<circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M11 7 6 16M13 7l5 9M7.2 18h9.6"/>' },
-    { id: 'voip', name: 'IP-телефонія', price: 2000,
+    { id: 'voip', name: 'IP-телефонія', price: 2000, page: 'ip-telefoniya.html',
       text: 'Офісна або домашня телефонія через інтернет: IP-телефони, внутрішні номери, переадресація дзвінків.',
       details: 'Скільки телефонів і внутрішніх номерів потрібно?',
       icon: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>' },
-    { id: 'cctv', name: 'Відеоспостереження', price: 2000,
+    { id: 'cctv', name: 'Відеоспостереження', price: 2000, page: 'videosposterezhennya-kyiv.html',
       text: 'Прокладання кабелю та встановлення IP-камер, налаштування запису й перегляду з телефона.',
       details: 'Скільки камер? Вулиця чи приміщення? Чи потрібен відеореєстратор?',
       icon: '<path d="M3 7h12l4 3v4l-4 3H3z"/><circle cx="9" cy="12" r="2.5"/><path d="M19 10l3-2v8l-3-2"/>' },
-    { id: 'configs', name: 'Готова конфігурація обладнання', price: null,
+    { id: 'configs', name: 'Готові конфігурації налаштувань', price: null, page: 'konfiguratsii.html',
+      text: 'Шаблони налаштувань для MikroTik, Cisco, Ubiquiti, ZyXEL, TP-Link, D-Link, Alcatel. Швидкий старт без помилок.',
+      icon: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3M13 15h4"/>',
       details: 'Яке обладнання (виробник і модель)? Що налаштувати: інтернет, VLAN, Wi-Fi, гостьова мережа, VPN, камери?' }
-  ];
-  const SPEEDS = [
-    { speed: 100, bars: 1, use: 'для 1–3 пристроїв', text: 'Серіали без підвисань і відеодзвінки з рідними чітко, без «тебе не чути».' },
-    { speed: 300, bars: 2, use: 'для родини', text: 'Фільм у 4K на телевізорі, поки діти грають, а ви працюєте з дому. Усім вистачає.', featured: true },
-    { speed: 500, bars: 3, use: 'для геймерів', text: 'Нова гра на 50 ГБ завантажується, поки ви п\'єте каву. Пінг низький, перемоги ваші.' },
-    { speed: 1000, bars: 4, use: 'для розумного дому', text: 'Камери, розумний дім, стріми та хмара одночасно. Інтернет, про який просто забуваєш.' },
-    { speed: 2500, bars: 5, use: 'для професіоналів · XGS-PON, Cat6a', text: 'Гра на 100 ГБ за 6 хвилин. Монтаж відео, стріми й бекапи в хмару без очікування.' }
-  ];
-  const spdLabel = n => n >= 1000 ? String(n / 1000).replace('.', ',') + ' Гбіт/с' : n + ' Мбіт/с';
-  const TECH = [
-    {
-      id: 'gpon', name: 'Оптика GPON', short: 'GPON', color: 'var(--accent)',
-      speed: 'до 1 Гбіт/с, XGS-PON до 10 Гбіт/с', ping: '2–5 мс', power: 'Так, з павербанком для ONT', mount: '1–2 год', who: 'Квартири й будинки, де провайдер має оптику',
-      text: 'Оптичне волокно заходить прямо у вашу квартиру або будинок. Біля роутера ставимо ONT-термінал, який перетворює світло на звичайний інтернет. Це найсучасніший і найстабільніший спосіб підключення.',
-      pros: ['Найвища швидкість і найменший пінг', 'Пасивна мережа працює під час відключень світла', 'Не боїться грози та електромагнітних завад'],
-      diagram: 'fiber'
-    },
-    {
-      id: 'utp', name: 'Вита пара', short: 'Вита пара Cat5e/Cat6', color: 'var(--blue)',
-      speed: 'до 1 Гбіт/с, Cat6a до 10 Гбіт/с', ping: '3–8 мс', power: 'Залежить від ДБЖ у будинку', mount: '1 год', who: 'Квартири, офіси, розводка по кімнатах',
-      text: 'Мідний мережевий кабель із вісьмома скрученими жилами. Прокладаємо його від щитка в під\'їзді або від роутера до потрібних кімнат, телевізора, комп\'ютера чи камер.',
-      pros: ['Швидкий і недорогий монтаж', 'Стабільніше за Wi-Fi для ПК, ТБ і консолей', 'До 100 метрів без втрати швидкості'],
-      diagram: 'utp'
-    },
-    {
-      id: 'coax', name: 'Коаксіальний кабель', short: 'Коаксіал', color: 'var(--muted)',
-      speed: 'до 500 Мбіт/с', ping: '10–20 мс', power: 'Залежить від провайдера', mount: '1–2 год', who: 'Кабельне ТБ, аналогові камери, старі мережі',
-      text: 'Кабель із центральною жилою та екраном. Використовується для кабельного телебачення, аналогових камер і мереж, побудованих на коаксі. Підкажемо, чи варто залишити наявний кабель, чи замінити його.',
-      pros: ['Підходить для ТБ та аналогових камер', 'Можна використати вже прокладений кабель', 'Добре захищений від завад'],
-      diagram: 'coax'
-    },
-    {
-      id: 'mesh', name: 'Mesh Wi-Fi', short: 'Mesh Wi-Fi', color: '#A06CD5',
-      speed: 'до 1 Гбіт/с між модулями', ping: '+1–3 мс', power: 'Від ДБЖ або павербанків', mount: '1–2 год', who: 'Великі квартири, будинки на кілька поверхів',
-      text: 'Кілька Wi-Fi модулів створюють одну мережу на весь дім. Телефон сам перемикається на найближчий модуль, тож сигнал однаково сильний у спальні, на кухні та на подвір\'ї.',
-      pros: ['Одна назва мережі на весь дім', 'Без «мертвих зон» і розривів', 'Легко додати ще модуль'],
-      diagram: 'mesh'
-    }
-  ];
-  const NEEDS = [
-    { id: 'people', label: 'Людей вдома', hint: 'соцмережі, сайти · 5 Мбіт/с', mbps: 5, val: 3, max: 10 },
-    { id: 'hd', label: 'Відео у HD', hint: 'YouTube, Netflix · 8 Мбіт/с', mbps: 8, val: 1, max: 8 },
-    { id: 'uhd', label: 'Відео у 4K', hint: 'Smart TV · 25 Мбіт/с', mbps: 25, val: 1, max: 6 },
-    { id: 'calls', label: 'Відеодзвінки', hint: 'Zoom, Meet · 4 Мбіт/с', mbps: 4, val: 1, max: 6 },
-    { id: 'games', label: 'Онлайн-ігри', hint: 'головне тут пінг · 10 Мбіт/с', mbps: 10, val: 0, max: 4 },
-    { id: 'cams', label: 'Камери відеоспостереження', hint: 'запис у хмару · 4 Мбіт/с', mbps: 4, val: 0, max: 16 },
-    { id: 'dl', label: 'Великі завантаження', hint: 'ігри, оновлення · 100 Мбіт/с', mbps: 100, val: 0, max: 3 },
-    { id: 'pro', label: 'Робота з великими файлами', hint: 'відеомонтаж, сервер, NAS · 500 Мбіт/с', mbps: 500, val: 0, max: 8 },
-    { id: 'smart', label: 'Розумні пристрої', hint: 'датчики, колонки · 2 Мбіт/с', mbps: 2, val: 2, max: 20 }
   ];
   const svc = id => SERVICES.find(s => s.id === id) || SERVICES[0];
 
@@ -1213,7 +1126,7 @@ footer a:hover { color: var(--ink); }
     const io = new IntersectionObserver(es => {
       es.forEach(e => { if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id)); });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    ['services', 'works', 'contacts', 'speeds', 'tech', 'reviews', 'faq'].forEach(id => io.observe(document.getElementById(id)));
+    ['services', 'works', 'reviews', 'faq', 'contacts'].forEach(id => io.observe(document.getElementById(id)));
   }
 
   /* ---------- toast ---------- */
@@ -1224,158 +1137,20 @@ footer a:hover { color: var(--ink); }
   }
 
   /* ---------- лічильник у героі ---------- */
-  let mi = 0;
-  setInterval(() => {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    mi++;
-    $('#mSpeed').textContent = 930 + Math.round(Math.sin(mi) * 8 + Math.random() * 6);
-    $('#mPing').textContent = (2 + (mi % 3 === 0 ? 1 : 0) + Math.round(Math.random())) + ' мс';
-  }, 1600);
 
   /* ---------- послуги ---------- */
-  $('#serviceList').innerHTML = SERVICES.filter(s => s.price).map(s => `
-    <article class="service ${s.featured ? 'featured' : ''}">
+  $('#serviceList').innerHTML = SERVICES.filter(s => s.price).map((s, n) => `
+    <a class="tile" href="${s.page}">
+      <span class="tile-n">0${n + 1}</span>
       <span class="s-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${s.icon}</svg></span>
       <h3>${s.name}</h3>
-      <div class="cost"><span class="from">від</span><b>${uah(s.price)}</b><span class="usd">${usd(s.price)}</span></div>
       <p>${s.text}</p>
-      <button class="btn ${s.featured ? 'btn-primary' : 'btn-ghost'}" data-open="lead" data-service="${s.id}">Зареєструвати</button>
-    </article>`).join('');
-
-  /* ---------- швидкості ---------- */
-  $('#speedList').innerHTML = SPEEDS.map(s => `
-    <article class="spd ${s.featured ? 'featured' : ''}">
-      ${s.featured ? '<span class="tag">Найпопулярніша</span>' : ''}
-      <div class="bars" aria-hidden="true">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= s.bars ? 'on' : ''}" style="height:${i * 20}%"></i>`).join('')}</div>
-      <div><div class="speed">${s.speed >= 1000 ? String(s.speed / 1000).replace('.', ',') : s.speed}<small>${s.speed >= 1000 ? 'Гбіт/с' : 'Мбіт/с'}</small></div><span class="use">${s.use}</span></div>
-      <p>${s.text}</p>
-      <button class="btn ${s.featured ? 'btn-primary' : 'btn-ghost'}" data-open="lead" data-service="internet" data-speed="${s.speed}">Хочу таку швидкість</button>
-    </article>`).join('');
-
-  /* ---------- калькулятор ---------- */
-  function renderNeeds() {
-    $('#needs').innerHTML = NEEDS.map(n => `
-      <div class="need">
-        <div><b>${n.label}</b><small>${n.hint}</small></div>
-        <div class="stepper">
-          <button type="button" data-step="-1" data-id="${n.id}" aria-label="Менше: ${n.label}">−</button>
-          <output id="nv-${n.id}">${n.val}</output>
-          <button type="button" data-step="1" data-id="${n.id}" aria-label="Більше: ${n.label}">+</button>
-        </div>
-      </div>`).join('');
-  }
-  $('#needs').addEventListener('click', e => {
-    const b = e.target.closest('[data-step]'); if (!b) return;
-    const n = NEEDS.find(x => x.id === b.dataset.id);
-    n.val = Math.max(0, Math.min(n.max, n.val + Number(b.dataset.step)));
-    $('#nv-' + n.id).textContent = n.val;
-    calc();
-  });
-  let recSpeed = 300;
-  function calc() {
-    const raw = NEEDS.reduce((s, n) => s + n.val * n.mbps, 0);
-    const need = Math.ceil(raw * 1.5 / 5) * 5;
-    $('#needMbps').textContent = need;
-    const P = [0, 500, 1000, 1500, 2500];
-    let pos = 100;
-    for (let i = 1; i < P.length; i++) if (need <= P[i]) { pos = (i - 1 + (need - P[i - 1]) / (P[i] - P[i - 1])) * 25; break; }
-    $('#needBar').style.width = Math.max(1, pos) + '%';
-    const s = SPEEDS.find(x => x.speed >= need) || SPEEDS[SPEEDS.length - 1];
-    recSpeed = s.speed;
-    $('#recText').innerHTML = need > 2500
-      ? `Вам потрібно понад 2,5 Гбіт/с. Радимо оптику XGS-PON та окремі кабелі Cat6a до найнавантаженіших пристроїв. Деталі обговоримо по телефону.`
-      : `Вам підійде швидкість <b>${spdLabel(s.speed)}</b>.${s.speed > 1000 ? ' Для неї потрібні оптика XGS-PON або кабель Cat6a та мережеве обладнання 2,5G/10G.' : ''} Запас ${Math.max(0, Math.round((s.speed / Math.max(need, 1) - 1) * 100))}%.`;
-    renderDl();
-  }
-  function fmtTime(sec) {
-    if (sec < 1) return '< 1 с';
-    if (sec < 60) return Math.round(sec) + ' с';
-    if (sec < 3600) { const m = Math.floor(sec / 60), s = Math.round(sec % 60); return m + ' хв' + (s ? ' ' + s + ' с' : ''); }
-    const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60); return h + ' год' + (m ? ' ' + m + ' хв' : '');
-  }
-  function renderDl() {
-    const gb = parseFloat($('#fileSel').value);
-    const times = SPEEDS.map(s => gb * 8000 / (s.speed * 0.9));
-    const max = Math.max(...times);
-    $('#dlRows').innerHTML = SPEEDS.map((s, i) => `
-      <div class="dl-row ${s.speed === recSpeed ? 'on' : ''}">
-        <span class="mono">${spdLabel(s.speed)}</span>
-        <span class="bar"><i style="width:${Math.max(3, times[i] / max * 100)}%"></i></span>
-        <span class="mono">${fmtTime(times[i])}</span>
-      </div>`).join('');
-  }
-  $('#fileSel').addEventListener('change', renderDl);
-
-  /* ---------- технології ---------- */
-  function diagram(kind) {
-    const house = x => `<path class="dg-box" d="M${x} 110 L${x + 30} 84 L${x + 60} 110 V150 H${x} Z"/>`;
-    const shield = `<rect class="dg-box" x="14" y="104" width="56" height="40" rx="8"/><text class="dg-text" x="22" y="128">щиток</text><text class="dg-sub" x="14" y="166">під'їзд / вулиця</text>`;
-    if (kind === 'fiber') return `
-      <svg viewBox="0 0 420 180" role="img" aria-label="Оптика від щитка до квартири">${shield}
-        <path class="dg-fiber" d="M70 124 H300"/><text class="dg-sub" x="150" y="112">оптоволокно</text>
-        ${house(300)}<rect class="dg-box" x="316" y="122" width="28" height="16" rx="3"/><text class="dg-sub" x="306" y="166">ONT + роутер</text>
-      </svg>`;
-    if (kind === 'utp') return `
-      <svg viewBox="0 0 420 180" role="img" aria-label="Вита пара від щитка до кімнат">${shield}
-        <path class="dg-copper" d="M70 124 H240"/><text class="dg-sub" x="128" y="112">вита пара Cat6</text>
-        <rect class="dg-box" x="240" y="112" width="30" height="24" rx="4"/><text class="dg-sub" x="232" y="100">роутер</text>
-        <path class="dg-copper" d="M270 118 Q 320 80 340 60"/><path class="dg-copper" d="M270 130 Q 330 140 360 150"/>
-        <rect class="dg-box" x="336" y="40" width="40" height="26" rx="4"/><text class="dg-sub" x="342" y="32">ТБ</text>
-        <rect class="dg-box" x="356" y="138" width="40" height="26" rx="4"/><text class="dg-sub" x="364" y="176">ПК</text>
-      </svg>`;
-    if (kind === 'coax') return `
-      <svg viewBox="0 0 420 180" role="img" aria-label="Коаксіальний кабель до будинку">${shield}
-        <path class="dg-coax" d="M70 124 H300"/><path class="dg-line" d="M70 124 H300" style="stroke-width:1;stroke:var(--surface)"/>
-        <text class="dg-sub" x="150" y="112">коаксіал</text>
-        ${house(300)}<rect class="dg-box" x="316" y="122" width="28" height="16" rx="3"/><text class="dg-sub" x="300" y="166">модем / ТБ</text>
-      </svg>`;
-    return `
-      <svg viewBox="0 0 420 180" role="img" aria-label="Mesh-модулі в будинку">
-        <path class="dg-box" d="M40 70 L210 14 L380 70 V168 H40 Z"/>
-        <path d="M40 118 H380" stroke="var(--line)" stroke-width="1.5"/>
-        <circle cx="110" cy="146" r="9" fill="var(--accent)"/><circle cx="300" cy="146" r="9" fill="var(--accent)"/><circle cx="210" cy="92" r="9" fill="var(--accent)"/>
-        <path class="dg-wave" d="M90 132 a 26 26 0 0 1 40 0M80 124 a 40 40 0 0 1 60 0"/>
-        <path class="dg-wave" d="M280 132 a 26 26 0 0 1 40 0M270 124 a 40 40 0 0 1 60 0"/>
-        <path class="dg-wave" d="M190 78 a 26 26 0 0 1 40 0M180 70 a 40 40 0 0 1 60 0"/>
-        <path class="dg-air" d="M118 140 L202 98M292 140 L218 98M120 146 H290"/>
-        <text class="dg-sub" x="78" y="112">1 поверх</text><text class="dg-sub" x="186" y="60">2 поверх</text>
-      </svg>`;
-  }
-  let techIdx = 0;
-  function renderTech() {
-    const t = TECH[techIdx];
-    $('#techTabs').innerHTML = TECH.map((x, i) => `<button class="tab" role="tab" id="tab-${x.id}" aria-selected="${i === techIdx}" data-i="${i}">${x.name}</button>`).join('');
-    $('#techPanel').setAttribute('aria-labelledby', 'tab-' + t.id);
-    $('#techPanel').innerHTML = `
-      <div class="tech-body">
-        <h3>${t.name}</h3>
-        <p>${t.text}</p>
-        <div class="spec">
-          <div><small>Швидкість</small><b>${t.speed}</b></div>
-          <div><small>Пінг</small><b>${t.ping}</b></div>
-          <div><small>Монтаж</small><b>${t.mount}</b></div>
-          <div><small>Без світла</small><b style="font-family:var(--f-body);font-weight:600;font-size:14px">${t.power}</b></div>
-        </div>
-        <ul class="pros">${t.pros.map(p => `<li>${p}</li>`).join('')}</ul>
-        <button class="btn btn-ghost btn-sm" style="justify-self:start" data-open="lead" data-service="${t.id === 'mesh' ? 'mesh' : 'internet'}">Залишити заявку</button>
-      </div>
-      <div class="diagram">${diagram(t.diagram)}
-        <div class="legend"><span><i style="background:var(--accent)"></i>оптика / Wi-Fi</span><span><i style="background:var(--blue)"></i>вита пара</span><span><i style="background:var(--ink);opacity:.55"></i>коаксіал</span></div>
-      </div>`;
-  }
-  $('#techTabs').addEventListener('click', e => { const b = e.target.closest('[data-i]'); if (b) { techIdx = +b.dataset.i; renderTech(); $('#tab-' + TECH[techIdx].id).focus(); } });
-  $('#techTabs').addEventListener('keydown', e => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-    techIdx = (techIdx + (e.key === 'ArrowRight' ? 1 : TECH.length - 1)) % TECH.length;
-    renderTech(); $('#tab-' + TECH[techIdx].id).focus();
-  });
-  $('#techTable').innerHTML = TECH.map(t => `
-    <tr><td><span class="dot" style="background:${t.color}"></span><b>${t.short}</b></td>
-    <td class="mono">${t.speed}</td><td class="mono">${t.ping}</td><td>${t.power}</td><td class="mono">${t.mount}</td><td>${t.who}</td></tr>`).join('');
+      <span class="tile-foot"><span class="tile-price">${s.price ? `від ${uah(s.price)} <small>${usd(s.price)}</small>` : 'ціна за запитом'}</span><span class="tile-go" aria-hidden="true">→</span></span>
+    </a>`).join('');
 
   /* ---------- списки послуг у формах ---------- */
   $('#lService').innerHTML = SERVICES.map(s => `<option value="${s.id}">${s.name} · ${s.price ? `від ${uah(s.price)} (${usd(s.price)})` : 'ціна за запитом'}</option>`).join('');
-  $('#rService').innerHTML = SERVICES.filter(s => s.price).map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+  $('#rService').innerHTML = SERVICES.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
   function syncService() {
     const s = svc($('#lService').value);
     $('#leadTitle').textContent = s.name;
@@ -1608,8 +1383,18 @@ footer a:hover { color: var(--ink); }
   lb.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
   lb.addEventListener('touchend', e => { if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) lbShow(lbI + (dx < 0 ? 1 : -1)); tx = null; });
 
+  /* ---------- відкрити заявку з посилання /#lead або /#lead-internet ---------- */
+  function leadFromHash() {
+    const m = location.hash.match(/^#lead(?:-([a-z]+))?$/);
+    if (!m) return;
+    openLead(m[1] && SERVICES.some(x => x.id === m[1]) ? m[1] : null);
+    history.replaceState(null, '', location.pathname);
+  }
+  addEventListener('hashchange', leadFromHash);
+  setTimeout(leadFromHash, 0);
+
   $('#year').textContent = new Date().getFullYear();
-  renderNeeds(); calc(); renderTech(); renderReviews(); syncService();
+  renderReviews(); syncService();
 })();
 </script>
 </body>
